@@ -5,18 +5,18 @@
  * @author Frank Giesecke <frank.giesecke@vivamera.com>
  */
 
-namespace FinalGene\PhoneBook\Console;
+namespace FinalGene\PhoneBook\Console\Command;
 
 use FinalGene\PhoneBook\Utils\TestHelperTrait;
 use PHPUnit\Framework\TestCase;
 use Sabre\VObject\Component\VCard;
 
 /**
- * V card trait test class.
+ * vCard trait test class.
  *
  * @package FinalGene\PhoneBook\Console
  *
- * @covers  \FinalGene\PhoneBook\Console\VCardTrait
+ * @covers  \FinalGene\PhoneBook\Console\Command\VCardTrait
  */
 class VCardTraitTest extends TestCase
 {

@@ -41,7 +41,7 @@ class Application extends SymfonyConsoleApplication
             [
                 new Read\CardDavCommand(),
                 new Read\CsvCommand(),
-                new Read\ExchangeCommand(),
+                new Read\EwsCommand(),
             ]
         );
     }

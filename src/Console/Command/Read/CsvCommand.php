@@ -7,7 +7,7 @@
 
 namespace FinalGene\PhoneBook\Console\Command\Read;
 
-use FinalGene\PhoneBook\Console\VCardTrait;
+use FinalGene\PhoneBook\Console\Command\VCardTrait;
 use League\Csv\Exception;
 use League\Csv\Reader;
 use libphonenumber\NumberParseException;

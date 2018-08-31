@@ -31,13 +31,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * Exchange command test class.
+ * Exchange webservice command test class.
  *
  * @package FinalGene\PhoneBook\Console\Command\Read
  *
- * @covers  \FinalGene\PhoneBook\Console\Command\Read\ExchangeCommand
+ * @covers  \FinalGene\PhoneBook\Console\Command\Read\EwsCommand
  */
-class ExchangeCommandTest extends TestCase
+class EwsCommandTest extends TestCase
 {
     use TestHelperTrait;
 
@@ -48,13 +48,13 @@ class ExchangeCommandTest extends TestCase
      */
     public function testCreateReaderCommandConfiguration(): void
     {
-        $command = new ExchangeCommand();
+        $command = new EwsCommand();
 
-        static::assertSame(ExchangeCommand::NAME, $command->getName());
-        static::assertSame(ExchangeCommand::DESCRIPTION, $command->getDescription());
-        static::assertTrue($command->getDefinition()->hasOption(ExchangeCommand::HOST_OPTION_NAME));
-        static::assertTrue($command->getDefinition()->hasOption(ExchangeCommand::USER_OPTION_NAME));
-        static::assertTrue($command->getDefinition()->hasOption(ExchangeCommand::ASK_PASSWORD_OPTION_NAME));
+        static::assertSame(EwsCommand::NAME, $command->getName());
+        static::assertSame(EwsCommand::DESCRIPTION, $command->getDescription());
+        static::assertTrue($command->getDefinition()->hasOption(EwsCommand::HOST_OPTION_NAME));
+        static::assertTrue($command->getDefinition()->hasOption(EwsCommand::USER_OPTION_NAME));
+        static::assertTrue($command->getDefinition()->hasOption(EwsCommand::ASK_PASSWORD_OPTION_NAME));
     }
 
     /**
@@ -64,7 +64,7 @@ class ExchangeCommandTest extends TestCase
      */
     public function testCreateReaderCommandInitialization(): void
     {
-        $command = $this->createPartialMock(ExchangeCommand::class, []);
+        $command = $this->createPartialMock(EwsCommand::class, []);
 
         static::invokeMethod(
             $command,
@@ -89,17 +89,17 @@ class ExchangeCommandTest extends TestCase
     public function testNoInteractionOnMissingAskOption(): void
     {
         $input = $this->prophesize(InputInterface::class);
-        $input->getOption(ExchangeCommand::ASK_PASSWORD_OPTION_NAME)
+        $input->getOption(EwsCommand::ASK_PASSWORD_OPTION_NAME)
             ->willReturn(false);
 
         $input->setArgument(
-            ExchangeCommand::PASSWORD_INTERACT_ARGUMENT_NAME,
+            EwsCommand::PASSWORD_INTERACT_ARGUMENT_NAME,
             Argument::type('string')
         )
             ->shouldNotBeCalled();
 
         $command = $this->createPartialMock(
-            ExchangeCommand::class,
+            EwsCommand::class,
             [
                 'getDefinition',
                 'getPasswordFromUser',
@@ -135,17 +135,17 @@ class ExchangeCommandTest extends TestCase
             ->shouldBeCalled();
 
         $input = $this->prophesize(InputInterface::class);
-        $input->getOption(ExchangeCommand::ASK_PASSWORD_OPTION_NAME)
+        $input->getOption(EwsCommand::ASK_PASSWORD_OPTION_NAME)
             ->willReturn(true);
 
         $input->setArgument(
-            ExchangeCommand::PASSWORD_INTERACT_ARGUMENT_NAME,
+            EwsCommand::PASSWORD_INTERACT_ARGUMENT_NAME,
             Argument::type('string')
         )
             ->shouldBeCalled();
 
         $command = $this->createPartialMock(
-            ExchangeCommand::class,
+            EwsCommand::class,
             [
                 'getDefinition',
                 'getPasswordFromUser',
@@ -185,19 +185,19 @@ class ExchangeCommandTest extends TestCase
     public function testCommandExecutionWillStopOnEwsError(): void
     {
         $input = $this->prophesize(InputInterface::class);
-        $input->getOption(ExchangeCommand::HOST_OPTION_NAME)
+        $input->getOption(EwsCommand::HOST_OPTION_NAME)
             ->shouldBeCalled()
             ->willReturn('');
 
-        $input->getOption(ExchangeCommand::USER_OPTION_NAME)
+        $input->getOption(EwsCommand::USER_OPTION_NAME)
             ->shouldBeCalled()
             ->willReturn('');
 
-        $input->getOption(ExchangeCommand::VERSION_OPTION_NAME)
+        $input->getOption(EwsCommand::VERSION_OPTION_NAME)
             ->shouldBeCalled()
             ->willReturn('');
 
-        $input->hasArgument(ExchangeCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
+        $input->hasArgument(EwsCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
             ->shouldBeCalled()
             ->willReturn(false);
 
@@ -223,7 +223,7 @@ class ExchangeCommandTest extends TestCase
             ->willReturn($response);
 
         $command = $this->createPartialMock(
-            ExchangeCommand::class,
+            EwsCommand::class,
             [
                 'createClient',
                 'createRequest',
@@ -252,7 +252,7 @@ class ExchangeCommandTest extends TestCase
         static::setPropertyValue($command, 'io', $io->reveal());
 
         static::assertEquals(
-            ExchangeCommand::EXIT_EWS_ERROR,
+            EwsCommand::EXIT_EWS_ERROR,
             static::invokeMethod(
                 $command,
                 'execute',
@@ -272,19 +272,19 @@ class ExchangeCommandTest extends TestCase
     public function testCommandExecutionWillShowWarningOnInvalidPhoneNumber(): void
     {
         $input = $this->prophesize(InputInterface::class);
-        $input->getOption(ExchangeCommand::HOST_OPTION_NAME)
+        $input->getOption(EwsCommand::HOST_OPTION_NAME)
             ->shouldBeCalled()
             ->willReturn('');
 
-        $input->getOption(ExchangeCommand::USER_OPTION_NAME)
+        $input->getOption(EwsCommand::USER_OPTION_NAME)
             ->shouldBeCalled()
             ->willReturn('');
 
-        $input->getOption(ExchangeCommand::VERSION_OPTION_NAME)
+        $input->getOption(EwsCommand::VERSION_OPTION_NAME)
             ->shouldBeCalled()
             ->willReturn('');
 
-        $input->hasArgument(ExchangeCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
+        $input->hasArgument(EwsCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
             ->shouldBeCalled()
             ->willReturn(false);
 
@@ -337,7 +337,7 @@ class ExchangeCommandTest extends TestCase
             ->willReturn('vCardContent');
 
         $command = $this->createPartialMock(
-            ExchangeCommand::class,
+            EwsCommand::class,
             [
                 'createClient',
                 'createRequest',
@@ -372,7 +372,7 @@ class ExchangeCommandTest extends TestCase
         static::setPropertyValue($command, 'io', $io->reveal());
 
         static::assertEquals(
-            ExchangeCommand::EXIT_OK,
+            EwsCommand::EXIT_OK,
             static::invokeMethod(
                 $command,
                 'execute',
@@ -395,31 +395,31 @@ class ExchangeCommandTest extends TestCase
     public function testCommandExecutionWillSucceed(bool $passwordFromEnvironment): void
     {
         $input = $this->prophesize(InputInterface::class);
-        $input->getOption(ExchangeCommand::HOST_OPTION_NAME)
+        $input->getOption(EwsCommand::HOST_OPTION_NAME)
             ->shouldBeCalled()
             ->willReturn('');
 
-        $input->getOption(ExchangeCommand::USER_OPTION_NAME)
+        $input->getOption(EwsCommand::USER_OPTION_NAME)
             ->shouldBeCalled()
             ->willReturn('');
 
-        $input->getOption(ExchangeCommand::VERSION_OPTION_NAME)
+        $input->getOption(EwsCommand::VERSION_OPTION_NAME)
             ->shouldBeCalled()
             ->willReturn('');
 
         if ($passwordFromEnvironment) {
-            $input->hasArgument(ExchangeCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
+            $input->hasArgument(EwsCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
                 ->shouldBeCalled()
                 ->willReturn(false);
 
-            $input->getArgument(ExchangeCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
+            $input->getArgument(EwsCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
                 ->shouldNotBeCalled();
         } else {
-            $input->hasArgument(ExchangeCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
+            $input->hasArgument(EwsCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
                 ->shouldBeCalled()
                 ->willReturn(true);
 
-            $input->getArgument(ExchangeCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
+            $input->getArgument(EwsCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
                 ->shouldBeCalled()
                 ->willReturn('');
         }
@@ -470,7 +470,7 @@ class ExchangeCommandTest extends TestCase
             ->willReturn('vCardContent');
 
         $command = $this->createPartialMock(
-            ExchangeCommand::class,
+            EwsCommand::class,
             [
                 'createClient',
                 'createRequest',
@@ -505,7 +505,7 @@ class ExchangeCommandTest extends TestCase
         static::setPropertyValue($command, 'io', $io->reveal());
 
         static::assertEquals(
-            ExchangeCommand::EXIT_OK,
+            EwsCommand::EXIT_OK,
             static::invokeMethod(
                 $command,
                 'execute',
@@ -541,7 +541,7 @@ class ExchangeCommandTest extends TestCase
      */
     public function testCreateClient(): void
     {
-        $command = $this->createPartialMock(ExchangeCommand::class, []);
+        $command = $this->createPartialMock(EwsCommand::class, []);
 
         static::assertInstanceOf(
             Client::class,
@@ -565,7 +565,7 @@ class ExchangeCommandTest extends TestCase
      */
     public function testCreateRequest(): void
     {
-        $command = $this->createPartialMock(ExchangeCommand::class, []);
+        $command = $this->createPartialMock(EwsCommand::class, []);
 
         static::assertInstanceOf(
             FindItemType::class,
@@ -601,7 +601,7 @@ class ExchangeCommandTest extends TestCase
             ->shouldBeCalled();
 
         $command = $this->createPartialMock(
-            ExchangeCommand::class,
+            EwsCommand::class,
             [
                 'createVCard',
                 'addPhoneNumberToVCard',
@@ -658,7 +658,7 @@ class ExchangeCommandTest extends TestCase
             ->shouldBeCalled();
 
         $command = $this->createPartialMock(
-            ExchangeCommand::class,
+            EwsCommand::class,
             [
                 'createVCard',
                 'addPhoneNumberToVCard',
@@ -717,7 +717,7 @@ class ExchangeCommandTest extends TestCase
             ->shouldBeCalled();
 
         $command = $this->createPartialMock(
-            ExchangeCommand::class,
+            EwsCommand::class,
             [
                 'createVCard',
                 'addPhoneNumberToVCard',
@@ -759,7 +759,7 @@ class ExchangeCommandTest extends TestCase
         )
             ->shouldNotBeCalled();
 
-        $command = $this->createPartialMock(ExchangeCommand::class, []);
+        $command = $this->createPartialMock(EwsCommand::class, []);
 
         static::invokeMethod(
             $command,
@@ -791,7 +791,7 @@ class ExchangeCommandTest extends TestCase
         $item->Key = 'key';
 
         $command = $this->createPartialMock(
-            ExchangeCommand::class,
+            EwsCommand::class,
             [
                 'normalizePhoneNumber',
                 'normalizePhoneNumberType',

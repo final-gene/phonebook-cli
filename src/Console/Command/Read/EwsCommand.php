@@ -8,7 +8,7 @@
 namespace FinalGene\PhoneBook\Console\Command\Read;
 
 use FinalGene\PhoneBook\Console\Question\GetPasswordTrait;
-use FinalGene\PhoneBook\Console\VCardTrait;
+use FinalGene\PhoneBook\Console\Command\VCardTrait;
 use jamesiarmes\PhpEws\ArrayType\NonEmptyArrayOfBaseFolderIdsType;
 use jamesiarmes\PhpEws\Client;
 use jamesiarmes\PhpEws\Enumeration\DefaultShapeNamesType;
@@ -33,11 +33,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use function is_array;
 
 /**
- * Exchange command class.
+ * Exchange webservice command class.
  *
  * @package FinalGene\PhoneBook\Console\Command\Read
  */
-class ExchangeCommand extends Command
+class EwsCommand extends Command
 {
     use GetPasswordTrait;
     use PhoneNumberTrait;

@@ -10,7 +10,7 @@ namespace FinalGene\PhoneBook\Console\Command\Read;
 use BarnabyWalters\CardDAV\Client;
 use Exception;
 use FinalGene\PhoneBook\Console\Question\GetPasswordTrait;
-use FinalGene\PhoneBook\Console\VCardTrait;
+use FinalGene\PhoneBook\Console\Command\VCardTrait;
 use Sabre\VObject\Component\VCard;
 use Sabre\VObject\Document;
 use Sabre\VObject\Reader;

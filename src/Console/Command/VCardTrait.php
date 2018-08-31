@@ -5,12 +5,12 @@
  * @author Frank Giesecke <frank.giesecke@vivamera.com>
  */
 
-namespace FinalGene\PhoneBook\Console;
+namespace FinalGene\PhoneBook\Console\Command;
 
 use Sabre\VObject\Component\VCard;
 
 /**
- * V card trait.
+ * vCard trait.
  *
  * @package FinalGene\PhoneBook\Console
  */
