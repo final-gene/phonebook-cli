@@ -99,6 +99,16 @@ class EwsCommand extends Command
     public const ASK_PASSWORD_OPTION_DESCRIPTION = 'Ask for users password';
 
     /**
+     * Name of insecure option
+     */
+    public const INSECURE_OPTION_NAME = 'insecure';
+
+    /**
+     * Description of insecure option
+     */
+    public const INSECURE_OPTION_DESCRIPTION = 'Don\'t validate ssl certificates';
+
+    /**
      * Name of password argument
      */
     public const PASSWORD_INTERACT_ARGUMENT_NAME = 'password';
@@ -159,6 +169,12 @@ class EwsCommand extends Command
             InputOption::VALUE_NONE,
             self::ASK_PASSWORD_OPTION_DESCRIPTION
         );
+        $this->addOption(
+            self::INSECURE_OPTION_NAME,
+            null,
+            InputOption::VALUE_NONE,
+            self::INSECURE_OPTION_DESCRIPTION
+        );
     }
 
     /**
@@ -215,17 +231,19 @@ class EwsCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
-        $host = $input->getOption(self::HOST_OPTION_NAME);
-        $user = $input->getOption(self::USER_OPTION_NAME);
-        $version = $input->getOption(self::VERSION_OPTION_NAME);
-
         $password = getenv(self::PASSWORD_ENVIRONMENT_NAME) ?: '';
         if (true === $input->hasArgument(self::PASSWORD_INTERACT_ARGUMENT_NAME)) {
             $password = $input->getArgument(self::PASSWORD_INTERACT_ARGUMENT_NAME);
         }
 
         $this->io->text('query ews server...');
-        $client = $this->createClient($host, $user, $password, $version);
+        $client = $this->createClient(
+            $input->getOption(self::HOST_OPTION_NAME),
+            $input->getOption(self::USER_OPTION_NAME),
+            $password,
+            $input->getOption(self::VERSION_OPTION_NAME),
+            true === $input->getOption(self::INSECURE_OPTION_NAME)
+        );
         $response = $client->FindItem($this->createRequest());
         $responseMessageList = $response->ResponseMessages->FindItemResponseMessage;
 
@@ -235,6 +253,7 @@ class EwsCommand extends Command
                 $this->io->error(
                     sprintf('%s: %s', $responseMessage->ResponseCode, $responseMessage->MessageText)
                 );
+
                 return self::EXIT_EWS_ERROR;
             }
 
@@ -266,22 +285,34 @@ class EwsCommand extends Command
      * @param string $user
      * @param string $password
      * @param string $version
+     * @param bool   $insecure
      *
      * @return Client
      */
-    protected function createClient(string $host, string $user, string $password, string $version): Client
-    {
+    protected function createClient(
+        string $host,
+        string $user,
+        string $password,
+        string $version,
+        bool $insecure
+    ): Client {
         $client = new Client(
             $host,
             $user,
             $password,
             $version
         );
-        /** @noinspection CurlSslServerSpoofingInspection */
-        $client->setCurlOptions([
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_SSL_VERIFYHOST => false,
-        ]);
+
+        if ($insecure) {
+            /** @noinspection CurlSslServerSpoofingInspection */
+            $client->setCurlOptions(
+                [
+                    CURLOPT_SSL_VERIFYPEER => false,
+                    CURLOPT_SSL_VERIFYHOST => false,
+                ]
+            );
+        }
+
         return $client;
     }
 

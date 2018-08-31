@@ -193,6 +193,10 @@ class EwsCommandTest extends TestCase
             ->shouldBeCalled()
             ->willReturn('');
 
+        $input->getOption(EwsCommand::INSECURE_OPTION_NAME)
+            ->shouldBeCalled()
+            ->willReturn(false);
+
         $input->getOption(EwsCommand::VERSION_OPTION_NAME)
             ->shouldBeCalled()
             ->willReturn('');
@@ -283,6 +287,10 @@ class EwsCommandTest extends TestCase
         $input->getOption(EwsCommand::VERSION_OPTION_NAME)
             ->shouldBeCalled()
             ->willReturn('');
+
+        $input->getOption(EwsCommand::INSECURE_OPTION_NAME)
+            ->shouldBeCalled()
+            ->willReturn(false);
 
         $input->hasArgument(EwsCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
             ->shouldBeCalled()
@@ -406,6 +414,10 @@ class EwsCommandTest extends TestCase
         $input->getOption(EwsCommand::VERSION_OPTION_NAME)
             ->shouldBeCalled()
             ->willReturn('');
+
+        $input->getOption(EwsCommand::INSECURE_OPTION_NAME)
+            ->shouldBeCalled()
+            ->willReturn(false);
 
         if ($passwordFromEnvironment) {
             $input->hasArgument(EwsCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
@@ -537,9 +549,12 @@ class EwsCommandTest extends TestCase
     /**
      * Test create client.
      *
+     * @param bool $insecure
+     *
      * @return void
+     * @dataProvider dataForCreateClientTest
      */
-    public function testCreateClient(): void
+    public function testCreateClient(bool $insecure): void
     {
         $command = $this->createPartialMock(EwsCommand::class, []);
 
@@ -553,9 +568,27 @@ class EwsCommandTest extends TestCase
                     'user',
                     'password',
                     'version',
+                    $insecure
                 ]
             )
         );
+    }
+
+    /**
+     * Data for create client test.
+     *
+     * @return array
+     */
+    public function dataForCreateClientTest(): array
+    {
+        return [
+            'verify ssl certificates' => [
+                'insecure' => false,
+            ],
+            'allow insecure ssl certificates' => [
+                'insecure' => true,
+            ],
+        ];
     }
 
     /**
