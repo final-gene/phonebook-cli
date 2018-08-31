@@ -480,15 +480,9 @@ CSV
             ->shouldBeCalled()
             ->willReturn(null);
 
-        $output = $this->createPartialMock(
-            NullOutput::class,
-            [
-                'write',
-            ]
-        );
-        $output->expects(static::once())
-            ->method('write')
-            ->with('vCardContent');
+        $output = $this->prophesize(NullOutput::class);
+        $output->write('vCardContent')
+            ->shouldBeCalled();
 
         $io = $this->prophesize(SymfonyStyle::class);
         $io->text(Argument::type('string'))
@@ -515,7 +509,7 @@ CSV
                 'execute',
                 [
                     $input->reveal(),
-                    $output,
+                    $output->reveal(),
                 ]
             )
         );
