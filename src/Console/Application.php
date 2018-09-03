@@ -7,6 +7,7 @@
 
 namespace FinalGene\PhoneBook\Console;
 
+use FinalGene\PhoneBook\Console\Command\VCard;
 use FinalGene\PhoneBook\Console\Command\Read;
 use Symfony\Component\Console\Application as SymfonyConsoleApplication;
 
@@ -42,6 +43,13 @@ class Application extends SymfonyConsoleApplication
                 new Read\CardDavCommand(),
                 new Read\CsvCommand(),
                 new Read\EwsCommand(),
+            ]
+        );
+
+        // vCard command
+        $this->addCommands(
+            [
+                new VCard\FilterCommand(),
             ]
         );
     }
