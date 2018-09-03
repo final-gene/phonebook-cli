@@ -231,7 +231,6 @@ class EwsCommandTest extends TestCase
             [
                 'createClient',
                 'createRequest',
-                'createVCard',
             ]
         );
 
@@ -248,10 +247,6 @@ class EwsCommandTest extends TestCase
         $command->expects(static::once())
             ->method('createRequest')
             ->willReturn($this->createMock(FindItemType::class));
-
-        $command->expects(static::once())
-            ->method('createVCard')
-            ->willReturn($this->createMock(VCard::class));
 
         static::setPropertyValue($command, 'io', $io->reveal());
 
@@ -296,10 +291,6 @@ class EwsCommandTest extends TestCase
             ->shouldBeCalled()
             ->willReturn(false);
 
-        $output = $this->prophesize(OutputInterface::class);
-        $output->write('vCardContent')
-            ->shouldBeCalled();
-
         $io = $this->prophesize(SymfonyStyle::class);
         $io->text(Argument::type('string'))
             ->shouldBeCalled();
@@ -336,20 +327,11 @@ class EwsCommandTest extends TestCase
             ->shouldBeCalled()
             ->willReturn($response);
 
-        $vCard = $this->prophesize(VCard::class);
-        $vCard->add(Argument::type(VCard::class))
-            ->shouldNotBeCalled();
-
-        $vCard->serialize()
-            ->shouldBeCalled()
-            ->willReturn('vCardContent');
-
         $command = $this->createPartialMock(
             EwsCommand::class,
             [
                 'createClient',
                 'createRequest',
-                'createVCard',
                 'createVCardFromEwsItem',
             ]
         );
@@ -369,10 +351,6 @@ class EwsCommandTest extends TestCase
             ->willReturn($this->createMock(FindItemType::class));
 
         $command->expects(static::once())
-            ->method('createVCard')
-            ->willReturn($vCard->reveal());
-
-        $command->expects(static::once())
             ->method('createVCardFromEwsItem')
             ->with(static::isInstanceOf(ContactItemType::class))
             ->willThrowException(new NumberParseException(0, ''));
@@ -386,7 +364,7 @@ class EwsCommandTest extends TestCase
                 'execute',
                 [
                     $input->reveal(),
-                    $output->reveal(),
+                    $this->createMock(OutputInterface::class),
                 ]
             )
         );
@@ -474,9 +452,6 @@ class EwsCommandTest extends TestCase
             ->willReturn($response);
 
         $vCard = $this->prophesize(VCard::class);
-        $vCard->add(Argument::type(VCard::class))
-            ->shouldBeCalled();
-
         $vCard->serialize()
             ->shouldBeCalled()
             ->willReturn('vCardContent');
@@ -486,7 +461,6 @@ class EwsCommandTest extends TestCase
             [
                 'createClient',
                 'createRequest',
-                'createVCard',
                 'createVCardFromEwsItem',
             ]
         );
@@ -506,13 +480,9 @@ class EwsCommandTest extends TestCase
             ->willReturn($this->createMock(FindItemType::class));
 
         $command->expects(static::once())
-            ->method('createVCard')
-            ->willReturn($vCard->reveal());
-
-        $command->expects(static::once())
             ->method('createVCardFromEwsItem')
             ->with(static::isInstanceOf(ContactItemType::class))
-            ->willReturn($this->createMock(VCard::class));
+            ->willReturn($vCard->reveal());
 
         static::setPropertyValue($command, 'io', $io->reveal());
 

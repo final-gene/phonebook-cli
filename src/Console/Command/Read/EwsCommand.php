@@ -247,7 +247,6 @@ class EwsCommand extends Command
         $response = $client->FindItem($this->createRequest());
         $responseMessageList = $response->ResponseMessages->FindItemResponseMessage;
 
-        $vCard = $this->createVCard();
         foreach ($responseMessageList as $responseMessage) {
             if (ResponseClassType::SUCCESS !== $responseMessage->ResponseClass) {
                 $this->io->error(
@@ -261,8 +260,8 @@ class EwsCommand extends Command
 
             foreach ($responseMessage->RootFolder->Items->Contact as $item) {
                 try {
-                    $vCard->add(
-                        $this->createVCardFromEwsItem($item)
+                    $output->write(
+                        $this->createVCardFromEwsItem($item)->serialize()
                     );
                     $this->io->progressAdvance();
                 } catch (NumberParseException $e) {
@@ -272,8 +271,6 @@ class EwsCommand extends Command
 
             $this->io->progressFinish();
         }
-
-        $output->write($vCard->serialize());
 
         return self::EXIT_OK;
     }

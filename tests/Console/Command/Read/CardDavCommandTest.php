@@ -271,9 +271,6 @@ class CardDavCommandTest extends TestCase
             ->shouldBeCalled()
             ->willReturn(0);
 
-        $output->write('vCardContent')
-            ->shouldBeCalled();
-
         $io = $this->prophesize(SymfonyStyle::class);
         $io->text(Argument::type('string'))
             ->shouldBeCalled();
@@ -290,20 +287,11 @@ class CardDavCommandTest extends TestCase
         $io->progressFinish()
             ->shouldBeCalled();
 
-        $vCard = $this->prophesize(VCard::class);
-        $vCard->add(Argument::type(VCard::class))
-            ->shouldNotBeCalled();
-
-        $vCard->serialize()
-            ->shouldBeCalled()
-            ->willReturn('vCardContent');
-
         $command = $this->createPartialMock(
             CardDavCommand::class,
             [
                 'createClient',
                 'getVCardIdListByClient',
-                'createVCard',
                 'getVCardById',
             ]
         );
@@ -325,10 +313,6 @@ class CardDavCommandTest extends TestCase
                     '',
                 ]
             );
-
-        $command->expects(static::once())
-            ->method('createVCard')
-            ->willReturn($vCard->reveal());
 
         $command->expects(static::once())
             ->method('getVCardById')
@@ -411,9 +395,6 @@ class CardDavCommandTest extends TestCase
             ->shouldBeCalled();
 
         $vCard = $this->prophesize(VCard::class);
-        $vCard->add(Argument::type(VCard::class))
-            ->shouldBeCalled();
-
         $vCard->serialize()
             ->shouldBeCalled()
             ->willReturn('vCardContent');
@@ -423,7 +404,6 @@ class CardDavCommandTest extends TestCase
             [
                 'createClient',
                 'getVCardIdListByClient',
-                'createVCard',
                 'getVCardById',
             ]
         );
@@ -447,17 +427,13 @@ class CardDavCommandTest extends TestCase
                 ]
             );
 
-        $command->expects(static::once())
-            ->method('createVCard')
-            ->willReturn($vCard->reveal());
-
         $command->expects(static::exactly(2))
             ->method('getVCardById')
             ->with(
                 static::isType('string'),
                 static::isInstanceOf(Client::class)
             )
-            ->willReturn($this->createMock(VCard::class));
+            ->willReturn($vCard->reveal());
 
         static::setPropertyValue($command, 'io', $io->reveal());
 

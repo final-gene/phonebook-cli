@@ -21,6 +21,7 @@ use SplFileInfo;
 use SplFileObject;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
@@ -318,9 +319,6 @@ CSV
             );
 
         $vCard = $this->prophesize(VCard::class);
-        $vCard->add(Argument::type(VCard::class))
-            ->shouldBeCalled();
-
         $vCard->serialize()
             ->shouldBeCalled()
             ->willReturn('vCardContent');
@@ -329,7 +327,6 @@ CSV
             CsvCommand::class,
             [
                 'createReader',
-                'createVCard',
                 'createVCardFromRow',
             ]
         );
@@ -340,12 +337,8 @@ CSV
             ->willReturn($reader->reveal());
 
         $command->expects(static::once())
-            ->method('createVCard')
-            ->willReturn($vCard->reveal());
-
-        $command->expects(static::once())
             ->method('createVCardFromRow')
-            ->willReturn($this->createMock(VCard::class));
+            ->willReturn($vCard->reveal());
 
         $input = $this->prophesize(InputInterface::class);
         $input->getArgument(CsvCommand::INPUT_FILE_ARGUMENT_NAME)
@@ -441,19 +434,10 @@ CSV
                 )
             );
 
-        $vCard = $this->prophesize(VCard::class);
-        $vCard->add(Argument::type(VCard::class))
-            ->shouldNotBeCalled();
-
-        $vCard->serialize()
-            ->shouldBeCalled()
-            ->willReturn('vCardContent');
-
         $command = $this->createPartialMock(
             CsvCommand::class,
             [
                 'createReader',
-                'createVCard',
                 'createVCardFromRow',
             ]
         );
@@ -462,10 +446,6 @@ CSV
             ->method('createReader')
             ->with(static::isInstanceOf(SplFileInfo::class))
             ->willReturn($reader->reveal());
-
-        $command->expects(static::once())
-            ->method('createVCard')
-            ->willReturn($vCard->reveal());
 
         $command->expects(static::once())
             ->method('createVCardFromRow')
@@ -479,10 +459,6 @@ CSV
         $input->getOption(CsvCommand::DELIMITER_OPTION_NAME)
             ->shouldBeCalled()
             ->willReturn(null);
-
-        $output = $this->prophesize(NullOutput::class);
-        $output->write('vCardContent')
-            ->shouldBeCalled();
 
         $io = $this->prophesize(SymfonyStyle::class);
         $io->text(Argument::type('string'))
@@ -509,7 +485,7 @@ CSV
                 'execute',
                 [
                     $input->reveal(),
-                    $output->reveal(),
+                    $this->createMock(OutputInterface::class),
                 ]
             )
         );

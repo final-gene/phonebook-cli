@@ -148,12 +148,11 @@ class CsvCommand extends Command
             return self::EXIT_CSV_ERROR;
         }
 
-        $vCard = $this->createVCard();
         $this->io->progressStart($reader->count());
         foreach ($reader->getRecords() as $row) {
             try {
-                $vCard->add(
-                    $this->createVCardFromRow($row)
+                $output->write(
+                    $this->createVCardFromRow($row)->serialize()
                 );
                 $this->io->progressAdvance();
             } catch (NumberParseException $e) {
@@ -161,8 +160,6 @@ class CsvCommand extends Command
             }
         }
         $this->io->progressFinish();
-
-        $output->write($vCard->serialize());
 
         return self::EXIT_OK;
     }

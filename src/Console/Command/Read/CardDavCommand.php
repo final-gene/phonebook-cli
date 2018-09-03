@@ -212,10 +212,11 @@ class CardDavCommand extends Command
         }
 
         $this->io->progressStart(count($vCardIdList));
-        $vCard = $this->createVCard();
         foreach ($vCardIdList as $vCardId) {
             try {
-                $vCard->add($this->getVCardById($vCardId, $client));
+                $output->write(
+                    $this->getVCardById($vCardId, $client)->serialize()
+                );
                 $this->io->progressAdvance();
             } catch (Exception $e) {
                 $this->io->warning($e->getMessage());
@@ -223,8 +224,6 @@ class CardDavCommand extends Command
             }
         }
         $this->io->progressFinish();
-
-        $output->write($vCard->serialize());
 
         return self::EXIT_OK;
     }
