@@ -7,7 +7,9 @@
 
 namespace FinalGene\PhoneBook\Console\Command\Read;
 
+use FinalGene\PhoneBook\Console\Command\FileTrait;
 use FinalGene\PhoneBook\Console\Command\VCardTrait;
+use FinalGene\PhoneBook\Exception\ReadFileException;
 use League\Csv\Exception;
 use League\Csv\Reader;
 use libphonenumber\NumberParseException;
@@ -29,6 +31,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class CsvCommand extends Command
 {
     use EmailTrait;
+    use FileTrait;
     use PhoneNumberTrait;
     use VCardTrait;
 
@@ -102,7 +105,8 @@ class CsvCommand extends Command
         $this->addArgument(
             self::INPUT_FILE_ARGUMENT_NAME,
             InputOption::VALUE_REQUIRED,
-            self::INPUT_FILE_ARGUMENT_DESCRIPTION
+            self::INPUT_FILE_ARGUMENT_DESCRIPTION,
+            'php://stdin'
         );
     }
 
@@ -143,7 +147,7 @@ class CsvCommand extends Command
                 $reader->setDelimiter($delimiter);
             }
             $this->io->text('read file...');
-        } catch (Exception $e) {
+        } catch (Exception|ReadFileException $e) {
             $this->io->error($e->getMessage());
             return self::EXIT_CSV_ERROR;
         }
@@ -170,10 +174,11 @@ class CsvCommand extends Command
      * @param SplFileInfo $file
      *
      * @return Reader
+     * @throws \FinalGene\PhoneBook\Exception\ReadFileException
      */
     protected function createReader(SplFileInfo $file): Reader
     {
-        return Reader::createFromFileObject($file->openFile());
+        return Reader::createFromStream($this->getResourceForFile($file));
     }
 
     /**

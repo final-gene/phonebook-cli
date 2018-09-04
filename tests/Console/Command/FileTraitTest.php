@@ -48,19 +48,19 @@ class FileTraitTest extends TestCase
     }
     
     /**
-     * Test read file.
+     * Test get resource for file.
      *
      * @return void
      */
-    public function testReadFile(): void
+    public function testGetResourceForFile(): void
     {
         $trait = $this->getMockForTrait(FileTrait::class);
 
         static::assertInternalType(
-            'string',
+            'resource',
             static::invokeMethod(
                 $trait,
-                'readFile',
+                'getResourceForFile',
                 [
                     new SplFileInfo(vfsStream::url('root/test.file')),
                 ]
@@ -69,21 +69,57 @@ class FileTraitTest extends TestCase
     }
 
     /**
-     * Test read file should throw exception if file not exists.
+     * Test get resource for file should throw exception if file not exists.
      *
      * @return void
      * @expectedException \FinalGene\PhoneBook\Exception\ReadFileException
      */
-    public function testReadFileShouldThrowExceptionIfFileNotExists(): void
+    public function testGetResourceForFileShouldThrowExceptionIfFileNotExists(): void
     {
         $trait = $this->getMockForTrait(FileTrait::class);
 
         static::invokeMethod(
             $trait,
-            'readFile',
+            'getResourceForFile',
             [
                 new SplFileInfo('non-exiting.file'),
             ]
+        );
+    }
+
+    /**
+     * Test read file.
+     *
+     * @return void
+     */
+    public function testReadFile(): void
+    {
+        $trait = $this->getMockForTrait(
+            FileTrait::class,
+            [],
+            '',
+            true,
+            true,
+            true,
+            [
+                'getResourceForFile',
+            ]
+        );
+
+        $trait->expects(static::once())
+            ->method('getResourceForFile')
+            ->with(static::isInstanceOf(SplFileInfo::class))
+            ->willReturn(fopen(vfsStream::url('root/test.file'), 'rb'));
+
+        static::assertInternalType(
+            'string',
+            static::invokeMethod(
+                $trait,
+                'readFile',
+                [
+                    $this->createMock(SplFileInfo::class),
+                ]
+            )
         );
     }
 
@@ -95,13 +131,28 @@ class FileTraitTest extends TestCase
      */
     public function testReadFileShouldThrowExceptionIfFileHasNoContent(): void
     {
-        $trait = $this->getMockForTrait(FileTrait::class);
+        $trait = $this->getMockForTrait(
+            FileTrait::class,
+            [],
+            '',
+            true,
+            true,
+            true,
+            [
+                'getResourceForFile',
+            ]
+        );
+
+        $trait->expects(static::once())
+            ->method('getResourceForFile')
+            ->with(static::isInstanceOf(SplFileInfo::class))
+            ->willReturn(fopen(vfsStream::url('root/empty.file'), 'rb'));
 
         static::invokeMethod(
             $trait,
             'readFile',
             [
-                new SplFileInfo(vfsStream::url('root/empty.file')),
+                $this->createMock(SplFileInfo::class),
             ]
         );
     }

@@ -18,7 +18,6 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Sabre\VObject\Component\VCard;
 use SplFileInfo;
-use SplFileObject;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -498,13 +497,6 @@ CSV
      */
     public function testCreateReader(): void
     {
-        $file = $this->prophesize(SplFileInfo::class);
-        $file->openFile()
-            ->shouldBeCalled()
-            ->willReturn(
-                $this->prophesize(SplFileObject::class)->reveal()
-            );
-
         $command = $this->createPartialMock(CsvCommand::class, []);
 
         static::assertInstanceOf(
@@ -513,7 +505,7 @@ CSV
                 $command,
                 'createReader',
                 [
-                    $file->reveal(),
+                    new SplFileInfo(vfsStream::url('root/test.csv')),
                 ]
             )
         );
