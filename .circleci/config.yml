@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  build:
+  build-dev:
     docker:
     - image: finalgene/composer:latest
     working_directory: /tmp/project
@@ -12,7 +12,7 @@ jobs:
         - v1-composer-{{ checksum "composer.lock" }}-{{ checksum ".circleci/config.yml" }}
     - run:
         name: Install composer dependencies
-        command: composer install --no-dev --no-interaction --optimize-autoloader --prefer-dist
+        command: composer install --no-interaction --optimize-autoloader --prefer-dist
     - run:
         name: Prepare shared folders
         command: composer run-script install-tools
@@ -20,6 +20,23 @@ jobs:
         paths:
         - vendor
         key: v1-composer-{{ checksum "composer.lock" }}-{{ checksum ".circleci/config.yml" }}
+
+  build-no-dev:
+    docker:
+    - image: finalgene/composer:latest
+    working_directory: /tmp/project
+    steps:
+    - checkout
+    - restore_cache:
+        keys:
+        - v1-composer-{{ checksum "composer.lock" }}-{{ checksum ".circleci/config.yml" }}-no-dev
+    - run:
+        name: Install composer dependencies
+        command: composer install --no-dev --no-interaction --optimize-autoloader --prefer-dist
+    - save_cache:
+        paths:
+        - vendor
+        key: v1-composer-{{ checksum "composer.lock" }}-{{ checksum ".circleci/config.yml" }}-no-dev
 
   code-style-check:
     docker:
@@ -56,7 +73,7 @@ jobs:
     - checkout
     - restore_cache:
         keys:
-        - v1-composer-{{ checksum "composer.lock" }}-{{ checksum ".circleci/config.yml" }}
+        - v1-composer-{{ checksum "composer.lock" }}-{{ checksum ".circleci/config.yml" }}-no-dev
     - run:
         name: Build phar
         command: |
@@ -89,22 +106,29 @@ workflows:
   version: 2
   build-n-deploy:
     jobs:
-    - build:
+    - build-dev:
         filters:
+          tags:
+            only: /[0-9]+(\.[0-9]+)*/
+
+    - build-no-dev:
+        filters:
+          branches:
+            ignore: /.*/
           tags:
             only: /[0-9]+(\.[0-9]+)*/
 
     - code-style-check:
         requires:
-        - build
+        - build-dev
 
     - unit-tests:
         requires:
-        - build
+        - build-dev
 
     - build-phar:
         requires:
-        - build
+        - build-no-dev
         filters:
           branches:
             ignore: /.*/
