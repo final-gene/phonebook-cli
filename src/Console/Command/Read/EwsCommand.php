@@ -180,8 +180,8 @@ class EwsCommand extends Command
     /**
      * Initialize.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * @param InputInterface  $input  Input interface
+     * @param OutputInterface $output Output interface
      *
      * @return void
      */
@@ -195,8 +195,8 @@ class EwsCommand extends Command
     /**
      * Interact.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * @param InputInterface  $input  Input interface
+     * @param OutputInterface $output Output interface
      *
      * @return void
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
@@ -221,8 +221,8 @@ class EwsCommand extends Command
     /**
      * Execute.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * @param InputInterface  $input  Input interface
+     * @param OutputInterface $output Output interface
      *
      * @return int|null
      * @throws \InvalidArgumentException
@@ -277,11 +277,11 @@ class EwsCommand extends Command
     /**
      * Create EWS client.
      *
-     * @param string $host
-     * @param string $user
-     * @param string $password
-     * @param string $version
-     * @param bool   $insecure
+     * @param string $host     EWS host name
+     * @param string $user     User name
+     * @param string $password Password
+     * @param string $version  EWS version
+     * @param bool   $insecure Allow insecure connection
      *
      * @return Client
      */
@@ -344,7 +344,7 @@ class EwsCommand extends Command
     /**
      * Create vCard from ews item.
      *
-     * @param ContactItemType $item
+     * @param ContactItemType $item EWS contact item
      *
      * @return VCard
      * @throws \InvalidArgumentException
@@ -392,8 +392,8 @@ class EwsCommand extends Command
     /**
      * Add phone number to vCard.
      *
-     * @param VCard                          $vCard
-     * @param PhoneNumberDictionaryEntryType $entry
+     * @param VCard                          $vCard vCard
+     * @param PhoneNumberDictionaryEntryType $entry EWS phone number item
      *
      * @return void
      * @throws \InvalidArgumentException

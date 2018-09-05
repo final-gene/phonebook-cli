@@ -45,6 +45,8 @@ class FilterCommandTest extends TestCase
 
     /**
      * Set up before class
+     *
+     * @return void
      */
     public static function setUpBeforeClass(): void
     {
@@ -65,8 +67,10 @@ VCF
 
     /**
      * Tear down after class
+     *
+     * @return void
      */
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         vfsStreamWrapper::unregister();
     }
@@ -222,7 +226,7 @@ VCF
                 'execute',
                 [
                     $input->reveal(),
-                    $this->createMock(OutputInterface::class)
+                    $this->createMock(OutputInterface::class),
                 ]
             )
         );
@@ -274,7 +278,7 @@ VCF
                 'execute',
                 [
                     $input->reveal(),
-                    $this->createMock(OutputInterface::class)
+                    $this->createMock(OutputInterface::class),
                 ]
             )
         );
@@ -304,8 +308,8 @@ VCF
     /**
      * Test filter will succeed if all filters match.
      *
-     * @param bool $match
-     * @param bool $expected
+     * @param bool $match    Flag to simulate mathing filters
+     * @param bool $expected Expected result
      *
      * @return void
      * @dataProvider dataForFilterTest
@@ -314,7 +318,9 @@ VCF
     {
         $filterByMethodList = [];
         foreach (array_keys(self::FILTER_LIST) as $filterOptionName) {
-            $filterByMethodList[$filterOptionName] = FilterCommand::getFilterFunctionNameByFilterOptionName($filterOptionName);
+            $filterByMethodList[$filterOptionName] = FilterCommand::getFilterFunctionNameByFilterOptionName(
+                $filterOptionName
+            );
         }
 
         $command = $this->createPartialMock(
@@ -367,9 +373,9 @@ VCF
     /**
      * Test filter by note.
      *
-     * @param VCard $vCard
-     * @param array $filterValueList
-     * @param bool  $expected
+     * @param VCard $vCard           vCard mock
+     * @param array $filterValueList List of filter values
+     * @param bool  $expected        Expected result
      *
      * @return void
      * @dataProvider dataForFilterByNoteTest
@@ -446,9 +452,9 @@ VCF
     /**
      * Test filter by note.
      *
-     * @param VCard     $vCard
-     * @param bool|null $filterValue
-     * @param bool      $expected
+     * @param VCard     $vCard       vCard mock
+     * @param bool|null $filterValue Filter value flag
+     * @param bool      $expected    Expected result
      *
      * @return void
      * @dataProvider dataForFilterByHasTelephoneTest
@@ -499,8 +505,8 @@ VCF
     /**
      * Test get filter name.
      *
-     * @param string $optionName
-     * @param string $expected
+     * @param string $optionName Filter option name
+     * @param string $expected   Expected function name
      *
      * @return void
      * @dataProvider dataForGetFilterFunctionNameByFilterOptionNameTest

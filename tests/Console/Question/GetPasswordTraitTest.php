@@ -26,6 +26,7 @@ class GetPasswordTraitTest extends TestCase
     /**
      * Test get password from user should throw exception on non identical passwords
      *
+     * @return void
      * @expectedException \Symfony\Component\Console\Exception\InvalidArgumentException
      */
     public function testGetPasswordFromUserShouldThrowExceptionOnNonIdenticalPasswords(): void
@@ -58,6 +59,8 @@ class GetPasswordTraitTest extends TestCase
 
     /**
      * Test get password from user should return password
+     *
+     * @return void
      */
     public function testGetPasswordFromUserShouldReturnPassword(): void
     {

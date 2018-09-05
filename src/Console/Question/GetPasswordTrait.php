@@ -20,7 +20,7 @@ trait GetPasswordTrait
     /**
      * Get password form user input
      *
-     * @param SymfonyStyle $io
+     * @param SymfonyStyle $io Console style
      *
      * @return string
      *

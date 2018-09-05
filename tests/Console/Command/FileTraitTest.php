@@ -26,6 +26,8 @@ class FileTraitTest extends TestCase
 
     /**
      * Set up before class
+     *
+     * @return void
      */
     public static function setUpBeforeClass(): void
     {
@@ -41,8 +43,10 @@ class FileTraitTest extends TestCase
 
     /**
      * Tear down after class
+     *
+     * @return void
      */
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         vfsStreamWrapper::unregister();
     }

@@ -20,10 +20,9 @@ trait PhoneNumberTrait
     /**
      * Normalize phone number
      *
-     * @param string $phoneNumber
+     * @param string $phoneNumber Phone number
      *
      * @return string
-     *
      * @throws \libphonenumber\NumberParseException
      */
     protected function normalizePhoneNumber(string $phoneNumber): string
@@ -43,7 +42,7 @@ trait PhoneNumberTrait
     /**
      * Normalize phone number type.
      *
-     * @param string $type
+     * @param string $type Phone number type
      *
      * @return string
      */

@@ -24,8 +24,8 @@ class PhoneNumberTraitTest extends TestCase
     /**
      * Test normalize phone number type.
      *
-     * @param string $phoneNumber
-     * @param string $expected
+     * @param string $phoneNumber Phone number
+     * @param string $expected    Expected result
      *
      * @return void
      *
@@ -73,8 +73,8 @@ class PhoneNumberTraitTest extends TestCase
     /**
      * Test normalize phone number type.
      *
-     * @param string $type
-     * @param string $expected
+     * @param string $type     Phone number type
+     * @param string $expected Expected result
      *
      * @return void
      *

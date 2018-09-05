@@ -17,7 +17,7 @@ trait EmailTrait
     /**
      * Normalize email type.
      *
-     * @param string $type
+     * @param string $type Email type
      *
      * @return string
      */

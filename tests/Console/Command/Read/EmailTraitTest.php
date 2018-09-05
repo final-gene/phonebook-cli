@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @package FinalGene\PhoneBook\Console\Command\Read
  *
- * @covers \FinalGene\PhoneBook\Console\Command\Read\EmailTrait
+ * @covers  \FinalGene\PhoneBook\Console\Command\Read\EmailTrait
  */
 class EmailTraitTest extends TestCase
 {
@@ -24,8 +24,8 @@ class EmailTraitTest extends TestCase
     /**
      * Test normalize email type.
      *
-     * @param string $type
-     * @param string $expected
+     * @param string $type     Email type
+     * @param string $expected Expected result
      *
      * @return void
      *

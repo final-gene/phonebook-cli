@@ -137,8 +137,8 @@ class CardDavCommand extends Command
     /**
      * Initialize.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * @param InputInterface  $input  Input interface
+     * @param OutputInterface $output Output interface
      *
      * @return void
      */
@@ -152,8 +152,8 @@ class CardDavCommand extends Command
     /**
      * Interact.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * @param InputInterface  $input  Input interface
+     * @param OutputInterface $output Output interface
      *
      * @return void
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
@@ -178,8 +178,8 @@ class CardDavCommand extends Command
     /**
      * Execute.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * @param InputInterface  $input  Input interface
+     * @param OutputInterface $output Output interface
      *
      * @return int|null
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
@@ -231,9 +231,9 @@ class CardDavCommand extends Command
     /**
      * Create card dav client.
      *
-     * @param string $server
-     * @param string $user
-     * @param string $password
+     * @param string $server   Server URI
+     * @param string $user     User name
+     * @param string $password Password
      *
      * @return Client
      */
@@ -248,7 +248,7 @@ class CardDavCommand extends Command
     /**
      * Get vCard id list by client.
      *
-     * @param Client $client
+     * @param Client $client CardDAV client
      *
      * @return string[]
      * @throws Exception
@@ -270,8 +270,8 @@ class CardDavCommand extends Command
     /**
      * Get vCard by id.
      *
-     * @param string $id
-     * @param Client $client
+     * @param string $id     vCard id
+     * @param Client $client CardDAV client
      *
      * @return VCard
      * @throws Exception
@@ -280,6 +280,7 @@ class CardDavCommand extends Command
     {
         /** @var VCard $vCard */
         $vCard = Reader::read($client->get_vcard($id));
+
         return $vCard->convert(Document::VCARD40);
     }
 }

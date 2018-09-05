@@ -340,7 +340,7 @@ class CardDavCommandTest extends TestCase
     /**
      * Test command execution will succeed.
      *
-     * @param bool $passwordFromEnvironment
+     * @param bool $passwordFromEnvironment Simulate password from environment
      *
      * @return void
      * @dataProvider dataForCommandExecutionWillSucceedTest

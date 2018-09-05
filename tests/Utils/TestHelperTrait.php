@@ -20,8 +20,8 @@ trait TestHelperTrait
     /**
      * Get method by reflection.
      *
-     * @param string $class
-     * @param string $method
+     * @param string $class  Class name
+     * @param string $method Method name
      *
      * @return ReflectionMethod
      * @throws \ReflectionException
@@ -31,6 +31,7 @@ trait TestHelperTrait
         /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         $reflectionMethod = new ReflectionMethod($class, $method);
         $reflectionMethod->setAccessible(true);
+
         return $reflectionMethod;
     }
 
@@ -38,9 +39,9 @@ trait TestHelperTrait
     /**
      * Invoke method by reflection.
      *
-     * @param object $object
-     * @param string $method
-     * @param array  $args
+     * @param object $object Target object
+     * @param string $method Method name
+     * @param array  $args   Argument list fpr invocation
      *
      * @return mixed
      * @throws \InvalidArgumentException
@@ -51,14 +52,15 @@ trait TestHelperTrait
         /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         $class = self::getClassName($object);
         $reflectionMethod = self::getMethod($class, $method);
+
         return $reflectionMethod->invokeArgs($object, $args);
     }
 
     /**
      * Get property by reflection.
      *
-     * @param string $class
-     * @param string $property
+     * @param string $class    Class name
+     * @param string $property Property name
      *
      * @return ReflectionProperty
      * @throws \ReflectionException
@@ -68,6 +70,7 @@ trait TestHelperTrait
         /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         $reflectionProperty = new ReflectionProperty($class, $property);
         $reflectionProperty->setAccessible(true);
+
         return $reflectionProperty;
     }
 
@@ -75,8 +78,8 @@ trait TestHelperTrait
     /**
      * Get property value.
      *
-     * @param object $object
-     * @param string $property
+     * @param object $object   Target object
+     * @param string $property Property name
      *
      * @return mixed
      * @throws \InvalidArgumentException
@@ -87,6 +90,7 @@ trait TestHelperTrait
         /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         $class = static::getClassName($object);
         $reflectionProperty = self::getProperty($class, $property);
+
         return $reflectionProperty->getValue($object);
     }
 
@@ -94,10 +98,11 @@ trait TestHelperTrait
     /**
      * Set property value by reflection.
      *
-     * @param object $object
-     * @param string $property
-     * @param mixed  $value
+     * @param object $object   Target object
+     * @param string $property Property name
+     * @param mixed  $value    Property value
      *
+     * @return void
      * @throws \InvalidArgumentException
      * @throws \ReflectionException
      */
@@ -113,9 +118,10 @@ trait TestHelperTrait
     /**
      * Set property values
      *
-     * @param object  $object
-     * @param mixed[] $propertyMap
+     * @param object  $object      Target object
+     * @param mixed[] $propertyMap Property with property name as key and property value as value
      *
+     * @return void
      * @throws \InvalidArgumentException
      * @throws \ReflectionException
      */
@@ -133,7 +139,7 @@ trait TestHelperTrait
     /**
      * Get class name
      *
-     * @param object $object
+     * @param object $object Source object
      *
      * @return string
      * @throws \InvalidArgumentException

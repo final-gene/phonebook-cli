@@ -22,14 +22,20 @@ trait FileTrait
     /**
      * Read file
      *
-     * @param SplFileInfo $file
+     * @param SplFileInfo $file Source file
      *
      * @return resource
      * @throws \FinalGene\PhoneBook\Exception\ReadFileException
      */
     protected function getResourceForFile(SplFileInfo $file)
     {
-        $resource = @fopen($file->getPathname(), 'rb');
+        if (!$file->isReadable()) {
+            throw new ReadFileException(
+                'Could not read from ' . $file->getPathname()
+            );
+        }
+
+        $resource = fopen($file->getPathname(), 'rb');
         if (!is_resource($resource)) {
             throw new ReadFileException(
                 'Could not read from ' . $file->getPathname()
@@ -45,7 +51,7 @@ trait FileTrait
     /**
      * Read file
      *
-     * @param SplFileInfo $file
+     * @param SplFileInfo $file Source file
      *
      * @return string
      * @throws \FinalGene\PhoneBook\Exception\ReadFileException

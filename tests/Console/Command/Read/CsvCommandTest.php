@@ -36,6 +36,8 @@ class CsvCommandTest extends TestCase
 
     /**
      * Set up before class
+     *
+     * @return void
      */
     public static function setUpBeforeClass(): void
     {
@@ -54,8 +56,10 @@ CSV
 
     /**
      * Tear down after class
+     *
+     * @return void
      */
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         vfsStreamWrapper::unregister();
     }
@@ -284,7 +288,7 @@ CSV
     /**
      * Test command execution.
      *
-     * @param null|string $delimiter
+     * @param null|string $delimiter Delimiter sign
      *
      * @return void
      * @dataProvider dataForCommandExecutionTest
@@ -405,8 +409,6 @@ CSV
 
     /**
      * Test command execution.
-     *
-     * @param null|string $delimiter
      *
      * @return void
      */

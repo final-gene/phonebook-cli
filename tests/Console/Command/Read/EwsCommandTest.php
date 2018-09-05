@@ -373,7 +373,7 @@ class EwsCommandTest extends TestCase
     /**
      * Test command execution will succeed.
      *
-     * @param bool $passwordFromEnvironment
+     * @param bool $passwordFromEnvironment Simulate password from environment
      *
      * @return void
      * @dataProvider dataForCommandExecutionWillSucceedTest
@@ -519,7 +519,7 @@ class EwsCommandTest extends TestCase
     /**
      * Test create client.
      *
-     * @param bool $insecure
+     * @param bool $insecure Simulate insecure connection
      *
      * @return void
      * @dataProvider dataForCreateClientTest
@@ -538,7 +538,7 @@ class EwsCommandTest extends TestCase
                     'user',
                     'password',
                     'version',
-                    $insecure
+                    $insecure,
                 ]
             )
         );

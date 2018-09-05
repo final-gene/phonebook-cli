@@ -133,8 +133,8 @@ class FilterCommand extends Command
     /**
      * Initialize.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * @param InputInterface  $input  Input interface
+     * @param OutputInterface $output Output interface
      *
      * @return void
      */
@@ -148,8 +148,8 @@ class FilterCommand extends Command
     /**
      * Execute.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * @param InputInterface  $input  Input interface
+     * @param OutputInterface $output Output interface
      *
      * @return int|null
      * @throws InvalidArgumentException
@@ -192,7 +192,7 @@ class FilterCommand extends Command
     /**
      * Get vCard by file.
      *
-     * @param SplFileInfo $file
+     * @param SplFileInfo $file Source file
      *
      * @return VCardList
      * @throws ReadFileException
@@ -205,8 +205,8 @@ class FilterCommand extends Command
     /**
      * Filter.
      *
-     * @param VCard $vCard
-     * @param array $filter
+     * @param VCard $vCard  vCard to filter
+     * @param array $filter Filter settings
      *
      * @return bool
      */
@@ -224,8 +224,8 @@ class FilterCommand extends Command
     /**
      * Filter note.
      *
-     * @param VCard $vCard
-     * @param array $filterValueList
+     * @param VCard $vCard           vCard to filter
+     * @param array $filterValueList Filter value list
      *
      * @return bool
      */
@@ -250,8 +250,8 @@ class FilterCommand extends Command
     /**
      * Filter by has telephone.
      *
-     * @param VCard     $vCard
-     * @param bool|null $mustHaveTelephone
+     * @param VCard     $vCard             vCard to filter
+     * @param bool|null $mustHaveTelephone Test param
      *
      * @return bool
      */
@@ -267,7 +267,7 @@ class FilterCommand extends Command
     /**
      * Get filter name.
      *
-     * @param string $filterOptionName
+     * @param string $filterOptionName Filter option name
      *
      * @return string
      */

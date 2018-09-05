@@ -20,6 +20,8 @@ class ApplicationTest extends TestCase
 {
     /**
      * Test console application.
+     *
+     * @return void
      */
     public function testConsoleApplication(): void
     {

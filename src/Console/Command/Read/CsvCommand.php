@@ -113,8 +113,8 @@ class CsvCommand extends Command
     /**
      * Initialize.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * @param InputInterface  $input  Input interface
+     * @param OutputInterface $output Output interface
      *
      * @return void
      */
@@ -128,8 +128,8 @@ class CsvCommand extends Command
     /**
      * Execute.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * @param InputInterface  $input  Input interface
+     * @param OutputInterface $output Output interface
      *
      * @return int|null
      * @throws \InvalidArgumentException
@@ -171,7 +171,7 @@ class CsvCommand extends Command
     /**
      * Create CSV reader.
      *
-     * @param SplFileInfo $file
+     * @param SplFileInfo $file Source file
      *
      * @return Reader
      * @throws \FinalGene\PhoneBook\Exception\ReadFileException
@@ -184,7 +184,7 @@ class CsvCommand extends Command
     /**
      * Create vcard from row.
      *
-     * @param array $row
+     * @param array $row CSV row data
      *
      * @return VCard
      * @throws \InvalidArgumentException
