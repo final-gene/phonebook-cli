@@ -1,0 +1,9 @@
+xsd2php:
+  namespaces:
+    '': 'FinalGene\PhoneBook\AVM'
+  destinations_php:
+    'FinalGene\PhoneBook\AVM': generated/AVM
+  destinations_jms:
+    'FinalGene\PhoneBook\AVM': config/jms
+  naming_strategy: long
+  path_generator: psr4

@@ -7,6 +7,8 @@
     ],
     "directories": [
         "bin",
+        "config",
+        "generated",
         "src"
     ],
     "files": [

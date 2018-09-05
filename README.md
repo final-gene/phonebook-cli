@@ -31,6 +31,14 @@ git clone https://github.com/final-gene/php-phonebook-cli.git
 composer install && composer run-script install-tools
 ```
 
+#### XSD converter
+
+This project supports XSD files which are used to generate PHP classes and JMS serializer definition.
+
+```bash
+composer run-script convert-xsd
+```
+
 ## Behaviors
 
 The read commands will create [VCards in version 4.0](https://tools.ietf.org/html/rfc6350).

@@ -7,8 +7,10 @@
 
 namespace FinalGene\PhoneBook\Console;
 
-use FinalGene\PhoneBook\Console\Command\VCard;
 use FinalGene\PhoneBook\Console\Command\From;
+use FinalGene\PhoneBook\Console\Command\To;
+use FinalGene\PhoneBook\Console\Command\VCard;
+use FinalGene\PhoneBook\Console\Helper\SerializerHelper;
 use Symfony\Component\Console\Application as SymfonyConsoleApplication;
 
 /**
@@ -37,12 +39,22 @@ class Application extends SymfonyConsoleApplication
     {
         parent::__construct(self::NAME, self::VERSION);
 
+        $this->getHelperSet()
+            ->set(new SerializerHelper());
+
         // From commands
         $this->addCommands(
             [
                 new From\CardDavCommand(),
                 new From\CsvCommand(),
                 new From\EwsCommand(),
+            ]
+        );
+
+        // to command
+        $this->addCommands(
+            [
+                new To\AvmCommand(),
             ]
         );
 

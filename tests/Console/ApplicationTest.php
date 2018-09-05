@@ -7,6 +7,7 @@
 
 namespace FinalGene\PhoneBook\Console;
 
+use FinalGene\PhoneBook\Console\Helper\SerializerHelper;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -29,5 +30,7 @@ class ApplicationTest extends TestCase
 
         static::assertSame(Application::NAME, $consoleApplication->getName());
         static::assertSame(Application::VERSION, $consoleApplication->getVersion());
+
+        static::assertTrue($consoleApplication->getHelperSet()->has(SerializerHelper::class));
     }
 }

@@ -24,12 +24,14 @@
         "ext-simplexml": "*",
         "barnabywalters/carddav": "^0.1.3",
         "giggsey/libphonenumber-for-php": "^8.9",
+        "goetas-webservices/xsd2php-runtime": "^0.2.8",
         "league/csv": "^9.1",
         "php-ews/php-ews": "^1.0",
         "sabre/vobject": "^4.1",
         "symfony/console": "^4.1"
     },
     "require-dev": {
+        "goetas-webservices/xsd2php": "^0.3.2",
         "mikey179/vfsStream": "^1.6",
         "roave/security-advisories": "dev-master"
     },
@@ -48,7 +50,8 @@
         "test": "phpunit --coverage-text",
         "check-style": "phpcs -p",
         "fix-style": "phpcbf -p",
-        "check-security": "security-checker security:check"
+        "check-security": "security-checker security:check",
+        "convert-xsd": "xsd2php convert xsd2php.yml resources/xsd/*.xsd --no-interaction"
     },
     "scripts-descriptions": {
         "install-tools": "Install all tools for testing and development.",
@@ -58,6 +61,7 @@
     },
     "autoload": {
         "psr-4": {
+            "FinalGene\\PhoneBook\\AVM\\": "generated/AVM",
             "FinalGene\\PhoneBook\\": "src"
         }
     },

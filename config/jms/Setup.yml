@@ -1,0 +1,3 @@
+FinalGene\PhoneBook\AVM\Setup:
+  xml_root_name: setup
+  properties: {  }
