@@ -1,0 +1,33 @@
+{
+    "alias": "phonebook.phar",
+    "chmod": "0755",
+    "compactors": [
+        "Herrera\\Box\\Compactor\\Json",
+        "Herrera\\Box\\Compactor\\Php"
+    ],
+    "directories": [
+        "bin",
+        "src"
+    ],
+    "files": [
+        "LICENSE"
+    ],
+    "finder": [
+        {
+            "name": "*.php",
+            "exclude": [
+                "bin",
+                "examples",
+                "script",
+                "tests"
+            ],
+            "in": [
+                "vendor"
+            ]
+        }
+    ],
+    "git-version": "package_version",
+    "main": "bin/phonebook",
+    "output": ".build/phonebook.phar",
+    "stub": true
+}
