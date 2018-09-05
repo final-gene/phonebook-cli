@@ -36,14 +36,16 @@
     "scripts": {
         "install-tools": [
             "php -r \" if (!file_exists('vendor/bin')) { mkdir('vendor/bin'); }\"",
-            "curl -Ls https://phar.phpunit.de/phpunit-7.phar --output vendor/bin/phpunit.phar",
-            "curl -Ls https://phar.phpunit.de/phploc.phar --output vendor/bin/phploc",
-            "curl -Ls https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar --output vendor/bin/phpcs",
-            "curl -Ls https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar --output vendor/bin/phpcbf",
-            "curl -Ls http://get.sensiolabs.org/security-checker.phar --output vendor/bin/security-checker",
+            "curl -LSs https://phar.phpunit.de/phpunit-7.phar --output vendor/bin/phpunit.phar",
+            "ln -sf phpunit.phar vendor/bin/phpunit",
+            "curl -LSs https://phar.phpunit.de/phploc.phar --output vendor/bin/phploc",
+            "curl -LSs https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar --output vendor/bin/phpcs",
+            "curl -LSs https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar --output vendor/bin/phpcbf",
+            "curl -LSs http://get.sensiolabs.org/security-checker.phar --output vendor/bin/security-checker",
+            "curl -LSs https://github.com/codacy/php-codacy-coverage/releases/download/1.4.2/codacy-coverage.phar --output vendor/bin/codacy-coverage",
             "chmod a+x vendor/bin/*"
         ],
-        "test": "phpunit.phar --coverage-text",
+        "test": "phpunit --coverage-text",
         "check-style": "phpcs -p",
         "fix-style": "phpcbf -p",
         "check-security": "security-checker security:check"
