@@ -5,7 +5,7 @@
  * @author Frank Giesecke <frank.giesecke@vivamera.com>
  */
 
-namespace FinalGene\PhoneBook\Console\Command\Read;
+namespace FinalGene\PhoneBook\Console\Command\From;
 
 use FinalGene\PhoneBook\Utils\TestHelperTrait;
 use jamesiarmes\PhpEws\ArrayType\ArrayOfRealItemsType;
@@ -35,7 +35,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  *
  * @package FinalGene\PhoneBook\Console\Command\Read
  *
- * @covers  \FinalGene\PhoneBook\Console\Command\Read\EwsCommand
+ * @covers  \FinalGene\PhoneBook\Console\Command\From\EwsCommand
  */
 class EwsCommandTest extends TestCase
 {

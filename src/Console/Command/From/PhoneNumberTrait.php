@@ -5,7 +5,7 @@
  * @author Frank Giesecke <frank.giesecke@vivamera.com>
  */
 
-namespace FinalGene\PhoneBook\Console\Command\Read;
+namespace FinalGene\PhoneBook\Console\Command\From;
 
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;

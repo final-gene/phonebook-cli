@@ -8,7 +8,7 @@
 namespace FinalGene\PhoneBook\Console;
 
 use FinalGene\PhoneBook\Console\Command\VCard;
-use FinalGene\PhoneBook\Console\Command\Read;
+use FinalGene\PhoneBook\Console\Command\From;
 use Symfony\Component\Console\Application as SymfonyConsoleApplication;
 
 /**
@@ -37,12 +37,12 @@ class Application extends SymfonyConsoleApplication
     {
         parent::__construct(self::NAME, self::VERSION);
 
-        // Read commands
+        // From commands
         $this->addCommands(
             [
-                new Read\CardDavCommand(),
-                new Read\CsvCommand(),
-                new Read\EwsCommand(),
+                new From\CardDavCommand(),
+                new From\CsvCommand(),
+                new From\EwsCommand(),
             ]
         );
 

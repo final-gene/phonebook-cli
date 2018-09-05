@@ -5,7 +5,7 @@
  * @author Frank Giesecke <frank.giesecke@vivamera.com>
  */
 
-namespace FinalGene\PhoneBook\Console\Command\Read;
+namespace FinalGene\PhoneBook\Console\Command\From;
 
 use FinalGene\PhoneBook\Utils\TestHelperTrait;
 use PHPUnit\Framework\TestCase;
@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @package FinalGene\PhoneBook\Console\Command\Read
  *
- * @covers  \FinalGene\PhoneBook\Console\Command\Read\EmailTrait
+ * @covers  \FinalGene\PhoneBook\Console\Command\From\EmailTrait
  */
 class EmailTraitTest extends TestCase
 {

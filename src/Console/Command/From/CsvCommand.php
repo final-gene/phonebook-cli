@@ -5,7 +5,7 @@
  * @author Frank Giesecke <frank.giesecke@vivamera.com>
  */
 
-namespace FinalGene\PhoneBook\Console\Command\Read;
+namespace FinalGene\PhoneBook\Console\Command\From;
 
 use FinalGene\PhoneBook\Console\Command\FileTrait;
 use FinalGene\PhoneBook\Console\Command\VCardTrait;
@@ -53,7 +53,7 @@ class CsvCommand extends Command
     /**
      * Command name
      */
-    public const NAME = 'read:csv';
+    public const NAME = 'from:csv';
 
     /**
      * Command description

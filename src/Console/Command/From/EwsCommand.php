@@ -5,7 +5,7 @@
  * @author Frank Giesecke <frank.giesecke@vivamera.com>
  */
 
-namespace FinalGene\PhoneBook\Console\Command\Read;
+namespace FinalGene\PhoneBook\Console\Command\From;
 
 use FinalGene\PhoneBook\Console\Question\GetPasswordTrait;
 use FinalGene\PhoneBook\Console\Command\VCardTrait;
@@ -61,7 +61,7 @@ class EwsCommand extends Command
     /**
      * Command name
      */
-    public const NAME = 'read:ews';
+    public const NAME = 'from:ews';
 
     /**
      * Command description

@@ -5,7 +5,7 @@
  * @author Frank Giesecke <frank.giesecke@vivamera.com>
  */
 
-namespace FinalGene\PhoneBook\Console\Command\Read;
+namespace FinalGene\PhoneBook\Console\Command\From;
 
 use BarnabyWalters\CardDAV\Client;
 use Exception;
@@ -51,7 +51,7 @@ class CardDavCommand extends Command
     /**
      * Command name
      */
-    public const NAME = 'read:card-dav';
+    public const NAME = 'from:card-dav';
 
     /**
      * Command description

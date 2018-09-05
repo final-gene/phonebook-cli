@@ -5,7 +5,7 @@
  * @author Frank Giesecke <frank.giesecke@vivamera.com>
  */
 
-namespace FinalGene\PhoneBook\Console\Command\Read;
+namespace FinalGene\PhoneBook\Console\Command\From;
 
 use BarnabyWalters\CardDAV\Client;
 use Exception;
@@ -25,7 +25,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  *
  * @package FinalGene\PhoneBook\Console\Command\Read
  *
- * @covers  \FinalGene\PhoneBook\Console\Command\Read\CardDavCommand
+ * @covers  \FinalGene\PhoneBook\Console\Command\From\CardDavCommand
  */
 class CardDavCommandTest extends TestCase
 {
