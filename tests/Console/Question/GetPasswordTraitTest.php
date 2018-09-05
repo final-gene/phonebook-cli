@@ -78,5 +78,4 @@ class GetPasswordTraitTest extends TestCase
 
         static::assertSame('password', $result);
     }
-
 }

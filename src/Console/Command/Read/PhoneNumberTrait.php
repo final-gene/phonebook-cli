@@ -35,7 +35,8 @@ trait PhoneNumberTrait
             '',
             $phoneUtil->format(
                 $phoneUtil->parse($phoneNumber, 'DE'),
-                PhoneNumberFormat::INTERNATIONAL)
+                PhoneNumberFormat::INTERNATIONAL
+            )
         );
     }
 
@@ -64,7 +65,8 @@ trait PhoneNumberTrait
             $singleType = preg_replace(
                 array_keys($mapping),
                 array_values($mapping),
-                $singleType);
+                $singleType
+            );
         }
 
         return implode(

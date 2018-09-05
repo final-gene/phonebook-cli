@@ -500,7 +500,8 @@ class CardDavCommandTest extends TestCase
         $client = $this->prophesize(Client::class);
         $client->get(false)
             ->shouldBeCalled()
-            ->willReturn(<<<XML
+            ->willReturn(
+                <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <response>
  <element>
@@ -544,7 +545,8 @@ XML
         $client = $this->prophesize(Client::class);
         $client->get_vcard(Argument::type('string'))
             ->shouldBeCalled()
-            ->willReturn(<<<VCARD
+            ->willReturn(
+                <<<VCARD
 BEGIN:VCARD
 VERSION:2.1
 END:VCARD

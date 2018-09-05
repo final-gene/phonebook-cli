@@ -274,17 +274,16 @@ class FilterCommand extends Command
     public static function getFilterFunctionNameByFilterOptionName(string $filterOptionName): string
     {
         return 'filterBy' . str_replace(
-                '-',
-                '',
-                ucwords(
-                    str_replace(
-                        'filter-',
-                        '',
-                        $filterOptionName
-                    ),
-                    '-'
-                )
-            );
-
+            '-',
+            '',
+            ucwords(
+                str_replace(
+                    'filter-',
+                    '',
+                    $filterOptionName
+                ),
+                '-'
+            )
+        );
     }
 }

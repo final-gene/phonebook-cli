@@ -216,7 +216,6 @@ class EwsCommand extends Command
                 $this->getPasswordFromUser($this->io)
             );
         }
-
     }
 
     /**
