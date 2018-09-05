@@ -59,7 +59,8 @@ jobs:
         - v1-composer-{{ checksum "composer.lock" }}-{{ checksum ".circleci/config.yml" }}
     - run:
         name: Execute unit tests
-        command: vendor/bin/phpunit --coverage-text --coverage-clover=.build/logs/coverage.clover.xml
+        command: php -dzend_extension=xdebug.so vendor/bin/phpunit --coverage-text --coverage-clover=.build/logs/coverage.clover.xml
+        environment:
 
     - run:
         name: Upload coverage data

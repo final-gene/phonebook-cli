@@ -1,6 +1,6 @@
 # PhoneBook CLI project
 
-[![Build Status](...)](...)
+[![CircleCI](https://circleci.com/gh/final-gene/phonebook-cli.svg?style=svg)](https://circleci.com/gh/final-gene/phonebook-cli)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/df076931cab0487e9598d1c0ee85d5cc)](https://www.codacy.com/app/final-gene/phonebook-cli?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=final-gene/phonebook-cli&amp;utm_campaign=Badge_Grade)
 
 ## Set Up Host
