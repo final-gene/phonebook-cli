@@ -5,7 +5,6 @@
     </description>
 
     <file>./bin</file>
-    <file>./public/index.php</file>
     <file>./src</file>
     <file>./tests</file>
 
