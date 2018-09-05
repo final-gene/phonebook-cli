@@ -7,12 +7,10 @@
 
 namespace FinalGene\PhoneBook\Console\Command\VCard;
 
-use FinalGene\PhoneBook\Console\Command\FileTrait;
 use FinalGene\PhoneBook\Console\Command\VCardTrait;
 use FinalGene\PhoneBook\Exception\ReadFileException;
 use Sabre\VObject\Component\VCard;
 use Sabre\VObject\ParseException;
-use Sabre\VObject\Splitter\VCard as VCardList;
 use SplFileInfo;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
@@ -29,7 +27,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class FilterCommand extends Command
 {
-    use FileTrait;
     use VCardTrait;
 
     /**
@@ -187,19 +184,6 @@ class FilterCommand extends Command
         }
 
         return self::EXIT_OK;
-    }
-
-    /**
-     * Get vCard by file.
-     *
-     * @param SplFileInfo $file Source file
-     *
-     * @return VCardList
-     * @throws ReadFileException
-     */
-    protected function getVCardListByFile(SplFileInfo $file): VCardList
-    {
-        return new VCardList($this->getResourceForFile($file));
     }
 
     /**

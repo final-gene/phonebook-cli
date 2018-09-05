@@ -9,8 +9,6 @@ namespace FinalGene\PhoneBook\Console\Command\VCard;
 
 use FinalGene\PhoneBook\Exception\ReadFileException;
 use FinalGene\PhoneBook\Utils\TestHelperTrait;
-use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamWrapper;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Sabre\VObject\Component\VCard;
@@ -44,38 +42,6 @@ class FilterCommandTest extends TestCase
     ];
 
     /**
-     * Set up before class
-     *
-     * @return void
-     */
-    public static function setUpBeforeClass(): void
-    {
-        vfsStream::setup(
-            'root',
-            0444,
-            [
-                'test.vcf' => <<<VCF
-BEGIN:VCARD
-VERSION:4.0
-FN:Dr. Erika Mustermann
-END:VCARD
-VCF
-                ,
-            ]
-        );
-    }
-
-    /**
-     * Tear down after class
-     *
-     * @return void
-     */
-    public static function tearDownAfterClass(): void
-    {
-        vfsStreamWrapper::unregister();
-    }
-
-    /**
      * Test create reader command configuration.
      *
      * @return void
@@ -86,6 +52,11 @@ VCF
 
         static::assertSame(FilterCommand::NAME, $command->getName());
         static::assertSame(FilterCommand::DESCRIPTION, $command->getDescription());
+
+        $definition = $command->getDefinition();
+        static::assertTrue($definition->hasArgument(FilterCommand::INPUT_FILE_ARGUMENT_NAME));
+        static::assertTrue($definition->hasOption(FilterCommand::NOTE_FILTER_OPTION_NAME));
+        static::assertTrue($definition->hasOption(FilterCommand::HAS_TELEPHONE_FILTER_OPTION_NAME));
     }
 
     /**
@@ -282,27 +253,6 @@ VCF
                 ]
             )
         );
-    }
-
-    /**
-     * Test get vcard list by file.
-     *
-     * @return void
-     */
-    public function testGetVCardListByFile(): void
-    {
-        $command = $this->createPartialMock(FilterCommand::class, []);
-
-        /** @var VCard $result */
-        $result = static::invokeMethod(
-            $command,
-            'getVCardListByFile',
-            [
-                new SplFileInfo(vfsStream::url('root/test.vcf')),
-            ]
-        );
-
-        static::assertInstanceOf(VCardList::class, $result);
     }
 
     /**

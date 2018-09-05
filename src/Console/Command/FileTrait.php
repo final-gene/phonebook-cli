@@ -29,14 +29,9 @@ trait FileTrait
      */
     protected function getResourceForFile(SplFileInfo $file)
     {
-        if (!$file->isReadable()) {
-            throw new ReadFileException(
-                'Could not read from ' . $file->getPathname()
-            );
-        }
-
-        $resource = fopen($file->getPathname(), 'rb');
-        if (!is_resource($resource)) {
+        if (!$file->isReadable()
+            || !is_resource($resource = fopen($file->getPathname(), 'rb'))
+        ) {
             throw new ReadFileException(
                 'Could not read from ' . $file->getPathname()
             );

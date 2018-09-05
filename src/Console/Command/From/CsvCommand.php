@@ -7,7 +7,6 @@
 
 namespace FinalGene\PhoneBook\Console\Command\From;
 
-use FinalGene\PhoneBook\Console\Command\FileTrait;
 use FinalGene\PhoneBook\Console\Command\VCardTrait;
 use FinalGene\PhoneBook\Exception\ReadFileException;
 use League\Csv\Exception;
@@ -31,7 +30,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class CsvCommand extends Command
 {
     use EmailTrait;
-    use FileTrait;
     use PhoneNumberTrait;
     use VCardTrait;
 
