@@ -12,7 +12,7 @@ jobs:
               - v1-composer-{{ checksum "composer.lock" }}-{{ checksum ".circleci/config.yml" }}
         - run:
               name: Install composer dependencies
-              command: composer install --no-interaction --optimize-autoloader --prefer-dist
+              command: composer install --no-dev --no-interaction --optimize-autoloader --prefer-dist
         - run:
               name: Prepare shared folders
               command: composer run-script install-tools
