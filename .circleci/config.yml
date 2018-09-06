@@ -14,8 +14,10 @@ jobs:
         name: Install composer dependencies
         command: composer install --no-interaction --optimize-autoloader --prefer-dist
     - run:
-        name: Prepare shared folders
-        command: composer run-script install-tools
+        name: Install build tools
+        command: |
+          composer run-script install-phpunit
+          composer run-script install-codacy-coverage
     - save_cache:
         paths:
         - vendor
@@ -37,6 +39,16 @@ jobs:
         paths:
         - vendor
         key: v1-composer-{{ checksum "composer.lock" }}-{{ checksum ".circleci/config.yml" }}-no-dev
+
+  security-check:
+    docker:
+    - image: jsixc/sensiolabs-security-checker
+    working_directory: /tmp/project
+    steps:
+    - checkout
+    - run:
+        name: Execute code style checks
+        command: security-checker security:check
 
   code-style-check:
     docker:
@@ -118,6 +130,10 @@ workflows:
             ignore: /.*/
           tags:
             only: /[0-9]+(\.[0-9]+)*/
+
+    - security-check:
+        requires:
+        - build-dev
 
     - code-style-check:
         requires:

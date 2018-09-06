@@ -36,28 +36,52 @@
         "roave/security-advisories": "dev-master"
     },
     "scripts": {
-        "install-tools": [
-            "php -r \" if (!file_exists('vendor/bin')) { mkdir('vendor/bin'); }\"",
+        "install-codacy-coverage": [
+            "curl -LSs https://github.com/codacy/php-codacy-coverage/releases/download/1.4.2/codacy-coverage.phar --output vendor/bin/codacy-coverage",
+            "chmod a+x vendor/bin/codacy-coverage"
+        ],
+        "install-phpunit": [
             "curl -LSs https://phar.phpunit.de/phpunit-7.phar --output vendor/bin/phpunit.phar",
             "ln -sf phpunit.phar vendor/bin/phpunit",
+            "chmod a+x vendor/bin/phpunit.phar"
+        ],
+        "install-tools": [
+            "php -r \" if (!file_exists('vendor/bin')) { mkdir('vendor/bin'); }\"",
+            "@install-codacy-coverage",
+            "@install-phpunit",
             "curl -LSs https://phar.phpunit.de/phploc.phar --output vendor/bin/phploc",
             "curl -LSs https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar --output vendor/bin/phpcs",
             "curl -LSs https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar --output vendor/bin/phpcbf",
             "curl -LSs http://get.sensiolabs.org/security-checker.phar --output vendor/bin/security-checker",
-            "curl -LSs https://github.com/codacy/php-codacy-coverage/releases/download/1.4.2/codacy-coverage.phar --output vendor/bin/codacy-coverage",
             "chmod a+x vendor/bin/*"
         ],
-        "test": "phpunit --coverage-text",
+        "phploc": "phploc src tests --count-tests",
+        "phpunit": "phpunit --coverage-text",
         "check-style": "phpcs -p",
         "fix-style": "phpcbf -p",
         "check-security": "security-checker security:check",
-        "convert-xsd": "xsd2php convert xsd2php.yml resources/xsd/*.xsd --no-interaction"
+        "convert-xsd": "xsd2php convert xsd2php.yml resources/xsd/*.xsd --no-interaction",
+        "analyze": [
+            "@phploc",
+            "@check-security"
+        ],
+        "test": [
+            "@check-style",
+            "@phpunit"
+        ]
     },
     "scripts-descriptions": {
+        "install-codacy-coverage": "Install codacy coverage cli.",
+        "install-phpunit": "Install PHPUnit.",
         "install-tools": "Install all tools for testing and development.",
-        "test": "Run all tests.",
+        "phploc": "Get lines of code statistic.",
+        "phpmd": "Run mess detector.",
+        "phpunit": "Run unit tests.",
         "check-style": "Check coding styles.",
-        "fix-style": "Fix coding styles."
+        "fix-style": "Fix coding styles.",
+        "check-security": "Run sensio labs security checker.",
+        "analyze": "Run all analysis.",
+        "test": "Run all tests."
     },
     "autoload": {
         "psr-4": {
