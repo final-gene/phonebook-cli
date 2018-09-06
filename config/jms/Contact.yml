@@ -1,0 +1,47 @@
+FinalGene\PhoneBook\AVM\Contact:
+  xml_root_name: contact
+  properties:
+    category:
+      expose: true
+      access_type: public_method
+      serialized_name: category
+      accessor:
+        getter: getCategory
+        setter: setCategory
+      type: FinalGene\PhoneBook\AVM\Category
+    person:
+      expose: true
+      access_type: public_method
+      serialized_name: person
+      accessor:
+        getter: getPerson
+        setter: setPerson
+      type: FinalGene\PhoneBook\AVM\Person
+    telephony:
+      expose: true
+      access_type: public_method
+      serialized_name: telephony
+      accessor:
+        getter: getTelephony
+        setter: setTelephony
+      type: array<FinalGene\PhoneBook\AVM\Number>
+      xml_list:
+        inline: false
+        entry_name: number
+        skip_when_empty: false
+    services:
+      expose: true
+      access_type: public_method
+      serialized_name: services
+      accessor:
+        getter: getServices
+        setter: setServices
+      type: FinalGene\PhoneBook\AVM\Services
+    setup:
+      expose: true
+      access_type: public_method
+      serialized_name: setup
+      accessor:
+        getter: getSetup
+        setter: setSetup
+      type: FinalGene\PhoneBook\AVM\Setup

@@ -1,0 +1,16 @@
+# Path-based git attributes
+# https://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
+
+# Ignore all tests and meta files with "export-ignore".
+/.docker            export-ignore
+/.github            export-ignore
+/resources          export-ignore
+/tests              export-ignore
+/.editorconfig      export-ignore
+/.gitattributes     export-ignore
+/.gitignore         export-ignore
+/.phpstorm.meta.php export-ignore
+/phpcs.xml          export-ignore
+/phpunit.xml.dist   export-ignore
+/README.md          export-ignore
+/xsd2php.yml        export-ignore

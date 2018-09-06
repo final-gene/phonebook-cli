@@ -1,0 +1,114 @@
+{
+    "name": "finalgene/phonebook-cli",
+    "type": "project",
+    "description": "PhoneBook CLI project",
+    "keywords": [
+        "final gene",
+        "phonebook",
+        "console"
+    ],
+    "homepage": "https://github.com/final-gene/php-phonebook-cli",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Frank Giesecke",
+            "email": "frank.giesecke@final-gene.de",
+            "homepage": "https://github.com/FrankGiesecke",
+            "role": "Developer"
+        }
+    ],
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.2",
+        "ext-curl": "*",
+        "ext-simplexml": "*",
+        "barnabywalters/carddav": "^0.1.3",
+        "giggsey/libphonenumber-for-php": "^8.9",
+        "goetas-webservices/xsd2php-runtime": "^0.2.8",
+        "league/csv": "^9.1",
+        "php-ews/php-ews": "^1.0",
+        "sabre/vobject": "^4.1",
+        "symfony/console": "^4.1"
+    },
+    "require-dev": {
+        "goetas-webservices/xsd2php": "^0.3.2",
+        "mikey179/vfsStream": "^1.6",
+        "roave/security-advisories": "dev-master"
+    },
+    "scripts": {
+        "install-codacy-coverage": [
+            "curl -LSs https://github.com/codacy/php-codacy-coverage/releases/download/1.4.2/codacy-coverage.phar --output vendor/bin/codacy-coverage",
+            "chmod a+x vendor/bin/codacy-coverage"
+        ],
+        "install-phpunit": [
+            "curl -LSs https://phar.phpunit.de/phpunit-7.phar --output vendor/bin/phpunit.phar",
+            "ln -sf phpunit.phar vendor/bin/phpunit",
+            "chmod a+x vendor/bin/phpunit.phar"
+        ],
+        "install-tools": [
+            "php -r \" if (!file_exists('vendor/bin')) { mkdir('vendor/bin'); }\"",
+            "@install-codacy-coverage",
+            "@install-phpunit",
+            "curl -LSs https://phar.phpunit.de/phploc.phar --output vendor/bin/phploc",
+            "curl -LSs https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar --output vendor/bin/phpcs",
+            "curl -LSs https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar --output vendor/bin/phpcbf",
+            "curl -LSs http://get.sensiolabs.org/security-checker.phar --output vendor/bin/security-checker",
+            "chmod a+x vendor/bin/*"
+        ],
+        "phploc": "phploc src tests --count-tests",
+        "phpunit": "phpunit --coverage-text",
+        "check-style": "phpcs -p",
+        "fix-style": "phpcbf -p",
+        "check-security": "security-checker security:check",
+        "convert-xsd": "xsd2php convert xsd2php.yml resources/xsd/*.xsd --no-interaction",
+        "analyze": [
+            "@phploc",
+            "@check-security"
+        ],
+        "test": [
+            "@check-style",
+            "@phpunit"
+        ]
+    },
+    "scripts-descriptions": {
+        "install-codacy-coverage": "Install codacy coverage cli.",
+        "install-phpunit": "Install PHPUnit.",
+        "install-tools": "Install all tools for testing and development.",
+        "phploc": "Get lines of code statistic.",
+        "phpmd": "Run mess detector.",
+        "phpunit": "Run unit tests.",
+        "check-style": "Check coding styles.",
+        "fix-style": "Fix coding styles.",
+        "check-security": "Run sensio labs security checker.",
+        "analyze": "Run all analysis.",
+        "test": "Run all tests."
+    },
+    "autoload": {
+        "psr-4": {
+            "FinalGene\\PhoneBook\\AVM\\": "generated/AVM",
+            "FinalGene\\PhoneBook\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "FinalGene\\PhoneBook\\": "tests"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "7.2",
+            "ext-curl": "0",
+            "ext-simplexml": "0",
+            "ext-soap": "0"
+        }
+    },
+    "bin": [
+        "bin/phonebook"
+    ]
+}
