@@ -92,10 +92,12 @@ jobs:
     working_directory: /tmp/project
     steps:
     - checkout
+    - attach_workspace:
+        at: /tmp/project
     - run:
         name: Build phar
         command: |
-          if [ ! -d .build ]; then mkdir .build; fi
+          mkdir -p .build
           box build
     - persist_to_workspace:
         root: /tmp/project
@@ -145,15 +147,21 @@ workflows:
     jobs:
     - build-no-dev:
         filters:
-          branches:
-            ignore: /.*/
           tags:
             only: /[0-9]+(\.[0-9]+)*/
+          branches:
+            ignore: /.*/
 
     - build-phar:
         requires:
         - build-no-dev
+        filters:
+          tags:
+            only: /[0-9]+(\.[0-9]+)*/
 
     - deploy-phar:
         requires:
         - build-phar
+        filters:
+          tags:
+            only: /[0-9]+(\.[0-9]+)*/
