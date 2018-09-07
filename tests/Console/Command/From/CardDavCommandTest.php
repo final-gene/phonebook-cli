@@ -44,7 +44,6 @@ class CardDavCommandTest extends TestCase
         static::assertSame(CardDavCommand::DESCRIPTION, $command->getDescription());
         static::assertTrue($command->getDefinition()->hasOption(CardDavCommand::SERVER_OPTION_NAME));
         static::assertTrue($command->getDefinition()->hasOption(CardDavCommand::USER_OPTION_NAME));
-        static::assertTrue($command->getDefinition()->hasOption(CardDavCommand::ASK_PASSWORD_OPTION_NAME));
     }
 
     /**
@@ -76,48 +75,6 @@ class CardDavCommandTest extends TestCase
      *
      * @return void
      */
-    public function testNoInteractionOnMissingAskOption(): void
-    {
-        $input = $this->prophesize(InputInterface::class);
-        $input->getOption(CardDavCommand::ASK_PASSWORD_OPTION_NAME)
-            ->willReturn(false);
-
-        $input->setArgument(
-            CardDavCommand::PASSWORD_INTERACT_ARGUMENT_NAME,
-            Argument::type('string')
-        )
-            ->shouldNotBeCalled();
-
-        $command = $this->createPartialMock(
-            CardDavCommand::class,
-            [
-                'getDefinition',
-                'getPasswordFromUser',
-            ]
-        );
-
-        $command->expects(static::never())
-            ->method('getDefinition');
-
-        $command->expects(static::never())
-            ->method('getPasswordFromUser')
-            ->with(static::isInstanceOf(SymfonyStyle::class));
-
-        static::invokeMethod(
-            $command,
-            'interact',
-            [
-                $input->reveal(),
-                new NullOutput(),
-            ]
-        );
-    }
-
-    /**
-     * Test no interaction on missing ask option.
-     *
-     * @return void
-     */
     public function testInteraction(): void
     {
         $inputDefinition = $this->prophesize(InputDefinition::class);
@@ -125,11 +82,8 @@ class CardDavCommandTest extends TestCase
             ->shouldBeCalled();
 
         $input = $this->prophesize(InputInterface::class);
-        $input->getOption(CardDavCommand::ASK_PASSWORD_OPTION_NAME)
-            ->willReturn(true);
-
         $input->setArgument(
-            CardDavCommand::PASSWORD_INTERACT_ARGUMENT_NAME,
+            CardDavCommand::PASSWORD_ARGUMENT_NAME,
             Argument::type('string')
         )
             ->shouldBeCalled();
@@ -183,7 +137,7 @@ class CardDavCommandTest extends TestCase
             ->shouldBeCalled()
             ->willReturn('');
 
-        $input->hasArgument(CardDavCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
+        $input->isInteractive()
             ->shouldBeCalled()
             ->willReturn(false);
 
@@ -262,7 +216,7 @@ class CardDavCommandTest extends TestCase
             ->shouldBeCalled()
             ->willReturn('');
 
-        $input->hasArgument(CardDavCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
+        $input->isInteractive()
             ->shouldBeCalled()
             ->willReturn(false);
 
@@ -340,12 +294,12 @@ class CardDavCommandTest extends TestCase
     /**
      * Test command execution will succeed.
      *
-     * @param bool $passwordFromEnvironment Simulate password from environment
+     * @param bool $interactive Simulate interactive mode
      *
      * @return void
      * @dataProvider dataForCommandExecutionWillSucceedTest
      */
-    public function testCommandExecutionWillSucceed(bool $passwordFromEnvironment): void
+    public function testCommandExecutionWillSucceed(bool $interactive): void
     {
         $input = $this->prophesize(InputInterface::class);
         $input->getOption(CardDavCommand::SERVER_OPTION_NAME)
@@ -356,21 +310,21 @@ class CardDavCommandTest extends TestCase
             ->shouldBeCalled()
             ->willReturn('');
 
-        if ($passwordFromEnvironment) {
-            $input->hasArgument(CardDavCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
-                ->shouldBeCalled()
-                ->willReturn(false);
-
-            $input->getArgument(CardDavCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
-                ->shouldNotBeCalled();
-        } else {
-            $input->hasArgument(CardDavCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
+        if ($interactive) {
+            $input->isInteractive()
                 ->shouldBeCalled()
                 ->willReturn(true);
 
-            $input->getArgument(CardDavCommand::PASSWORD_INTERACT_ARGUMENT_NAME)
+            $input->getArgument(CardDavCommand::PASSWORD_ARGUMENT_NAME)
                 ->shouldBeCalled()
                 ->willReturn('');
+        } else {
+            $input->isInteractive()
+                ->shouldBeCalled()
+                ->willReturn(false);
+
+            $input->getArgument(CardDavCommand::PASSWORD_ARGUMENT_NAME)
+                ->shouldNotBeCalled();
         }
 
         $output = $this->prophesize(OutputInterface::class);
@@ -459,10 +413,10 @@ class CardDavCommandTest extends TestCase
     {
         return [
             'use password from environment' => [
-                'passwordFromEnvironment' => true,
+                'interactive' => false,
             ],
             'use password given by user' => [
-                'passwordFromEnvironment' => false,
+                'interactive' => true,
             ],
         ];
     }

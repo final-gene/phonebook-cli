@@ -7,8 +7,8 @@
 
 namespace FinalGene\PhoneBook\Console\Command\From;
 
-use FinalGene\PhoneBook\Console\Question\GetPasswordTrait;
 use FinalGene\PhoneBook\Console\Command\VCardTrait;
+use FinalGene\PhoneBook\Console\Question\GetPasswordTrait;
 use jamesiarmes\PhpEws\ArrayType\NonEmptyArrayOfBaseFolderIdsType;
 use jamesiarmes\PhpEws\Client;
 use jamesiarmes\PhpEws\Enumeration\DefaultShapeNamesType;
@@ -89,16 +89,6 @@ class EwsCommand extends Command
     public const USER_OPTION_DESCRIPTION = 'User login name';
 
     /**
-     * Name of password option
-     */
-    public const ASK_PASSWORD_OPTION_NAME = 'password';
-
-    /**
-     * Description of password option
-     */
-    public const ASK_PASSWORD_OPTION_DESCRIPTION = 'Ask for users password';
-
-    /**
      * Name of insecure option
      */
     public const INSECURE_OPTION_NAME = 'insecure';
@@ -111,7 +101,7 @@ class EwsCommand extends Command
     /**
      * Name of password argument
      */
-    public const PASSWORD_INTERACT_ARGUMENT_NAME = 'password';
+    public const PASSWORD_ARGUMENT_NAME = 'password';
 
     /**
      * Name of password environment
@@ -164,12 +154,6 @@ class EwsCommand extends Command
             Client::VERSION_2007
         );
         $this->addOption(
-            self::ASK_PASSWORD_OPTION_NAME,
-            'p',
-            InputOption::VALUE_NONE,
-            self::ASK_PASSWORD_OPTION_DESCRIPTION
-        );
-        $this->addOption(
             self::INSECURE_OPTION_NAME,
             null,
             InputOption::VALUE_NONE,
@@ -203,19 +187,17 @@ class EwsCommand extends Command
      */
     protected function interact(InputInterface $input, OutputInterface $output): void
     {
-        if (true === $input->getOption(self::ASK_PASSWORD_OPTION_NAME)) {
-            $this->getDefinition()
-                ->addArguments(
-                    [
-                        new InputArgument(self::PASSWORD_INTERACT_ARGUMENT_NAME),
-                    ]
-                );
-
-            $input->setArgument(
-                self::PASSWORD_INTERACT_ARGUMENT_NAME,
-                $this->getPasswordFromUser($this->io)
+        $this->getDefinition()
+            ->addArguments(
+                [
+                    new InputArgument(self::PASSWORD_ARGUMENT_NAME),
+                ]
             );
-        }
+
+        $input->setArgument(
+            self::PASSWORD_ARGUMENT_NAME,
+            $this->getPasswordFromUser($this->io)
+        );
     }
 
     /**
@@ -230,9 +212,10 @@ class EwsCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
-        $password = getenv(self::PASSWORD_ENVIRONMENT_NAME) ?: '';
-        if (true === $input->hasArgument(self::PASSWORD_INTERACT_ARGUMENT_NAME)) {
-            $password = $input->getArgument(self::PASSWORD_INTERACT_ARGUMENT_NAME);
+        if ($input->isInteractive()) {
+            $password = $input->getArgument(self::PASSWORD_ARGUMENT_NAME);
+        } else {
+            $password = getenv(self::PASSWORD_ENVIRONMENT_NAME) ?: '';
         }
 
         $this->io->text('query ews server...');

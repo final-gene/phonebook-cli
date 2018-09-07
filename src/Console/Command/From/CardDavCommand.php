@@ -9,8 +9,8 @@ namespace FinalGene\PhoneBook\Console\Command\From;
 
 use BarnabyWalters\CardDAV\Client;
 use Exception;
-use FinalGene\PhoneBook\Console\Question\GetPasswordTrait;
 use FinalGene\PhoneBook\Console\Command\VCardTrait;
+use FinalGene\PhoneBook\Console\Question\GetPasswordTrait;
 use Sabre\VObject\Component\VCard;
 use Sabre\VObject\Document;
 use Sabre\VObject\Reader;
@@ -79,19 +79,9 @@ class CardDavCommand extends Command
     public const USER_OPTION_DESCRIPTION = 'User login name';
 
     /**
-     * Name of password option
-     */
-    public const ASK_PASSWORD_OPTION_NAME = 'password';
-
-    /**
-     * Description of password option
-     */
-    public const ASK_PASSWORD_OPTION_DESCRIPTION = 'Ask for users password';
-
-    /**
      * Name of password argument
      */
-    public const PASSWORD_INTERACT_ARGUMENT_NAME = 'password';
+    public const PASSWORD_ARGUMENT_NAME = 'password';
 
     /**
      * Name of password environment
@@ -126,12 +116,6 @@ class CardDavCommand extends Command
             InputOption::VALUE_REQUIRED,
             self::USER_OPTION_DESCRIPTION
         );
-        $this->addOption(
-            self::ASK_PASSWORD_OPTION_NAME,
-            'p',
-            InputOption::VALUE_NONE,
-            self::ASK_PASSWORD_OPTION_DESCRIPTION
-        );
     }
 
     /**
@@ -160,19 +144,17 @@ class CardDavCommand extends Command
      */
     protected function interact(InputInterface $input, OutputInterface $output): void
     {
-        if (true === $input->getOption(self::ASK_PASSWORD_OPTION_NAME)) {
-            $this->getDefinition()
-                ->addArguments(
-                    [
-                        new InputArgument(self::PASSWORD_INTERACT_ARGUMENT_NAME),
-                    ]
-                );
-
-            $input->setArgument(
-                self::PASSWORD_INTERACT_ARGUMENT_NAME,
-                $this->getPasswordFromUser($this->io)
+        $this->getDefinition()
+            ->addArguments(
+                [
+                    new InputArgument(self::PASSWORD_ARGUMENT_NAME),
+                ]
             );
-        }
+
+        $input->setArgument(
+            self::PASSWORD_ARGUMENT_NAME,
+            $this->getPasswordFromUser($this->io)
+        );
     }
 
     /**
@@ -189,9 +171,10 @@ class CardDavCommand extends Command
         $server = $input->getOption(self::SERVER_OPTION_NAME);
         $user = $input->getOption(self::USER_OPTION_NAME);
 
-        $password = getenv(self::PASSWORD_ENVIRONMENT_NAME) ?: '';
-        if (true === $input->hasArgument(self::PASSWORD_INTERACT_ARGUMENT_NAME)) {
-            $password = $input->getArgument(self::PASSWORD_INTERACT_ARGUMENT_NAME);
+        if ($input->isInteractive()) {
+            $password = $input->getArgument(self::PASSWORD_ARGUMENT_NAME);
+        } else {
+            $password = getenv(self::PASSWORD_ENVIRONMENT_NAME) ?: '';
         }
 
         $this->io->text('query dav server...');

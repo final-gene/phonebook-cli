@@ -9,19 +9,23 @@ jobs:
     - checkout
     - restore_cache:
         keys:
-        - v1-composer-{{ checksum "composer.lock" }}-{{ checksum ".circleci/config.yml" }}
+        - v1-composer-{{ checksum "composer.lock" }}-dev
     - run:
         name: Install composer dependencies
         command: composer install --no-interaction --optimize-autoloader --prefer-dist
+    - save_cache:
+        paths:
+        - vendor
+        key: v1-composer-{{ checksum "composer.lock" }}-dev
     - run:
         name: Install build tools
         command: |
           composer run-script install-phpunit
           composer run-script install-codacy-coverage
-    - save_cache:
+    - persist_to_workspace:
+        root: /tmp/project
         paths:
         - vendor
-        key: v1-composer-{{ checksum "composer.lock" }}-{{ checksum ".circleci/config.yml" }}
 
   build-no-dev:
     docker:
@@ -31,14 +35,18 @@ jobs:
     - checkout
     - restore_cache:
         keys:
-        - v1-composer-{{ checksum "composer.lock" }}-{{ checksum ".circleci/config.yml" }}-no-dev
+        - v1-composer-{{ checksum "composer.lock" }}-no-dev
     - run:
         name: Install composer dependencies
         command: composer install --no-dev --no-interaction --optimize-autoloader --prefer-dist
     - save_cache:
         paths:
         - vendor
-        key: v1-composer-{{ checksum "composer.lock" }}-{{ checksum ".circleci/config.yml" }}-no-dev
+        key: v1-composer-{{ checksum "composer.lock" }}-no-dev
+    - persist_to_workspace:
+        root: /tmp/project
+        paths:
+        - vendor
 
   security-check:
     docker:
@@ -66,17 +74,17 @@ jobs:
     working_directory: /tmp/project
     steps:
     - checkout
-    - restore_cache:
-        keys:
-        - v1-composer-{{ checksum "composer.lock" }}-{{ checksum ".circleci/config.yml" }}
+    - attach_workspace:
+        at: /tmp/project
     - run:
         name: Execute unit tests
-        command: php -dzend_extension=xdebug.so vendor/bin/phpunit --coverage-text --coverage-clover=.build/logs/coverage.clover.xml
+        command: php -dzend_extension=xdebug.so vendor/bin/phpunit --coverage-text --coverage-clover=.build/logs/coverage.clover.xml --log-junit=.build/test-results/phpunit/results.xml
         environment:
-
     - run:
         name: Upload coverage data
         command: vendor/bin/codacy-coverage clover .build/logs/coverage.clover.xml
+    - store_test_results:
+        path: .build/test-results
 
   build-phar:
     docker:
@@ -84,13 +92,12 @@ jobs:
     working_directory: /tmp/project
     steps:
     - checkout
-    - restore_cache:
-        keys:
-        - v1-composer-{{ checksum "composer.lock" }}-{{ checksum ".circleci/config.yml" }}-no-dev
+    - attach_workspace:
+        at: /tmp/project
     - run:
         name: Build phar
         command: |
-          if [ ! -d .build ]; then mkdir .build; fi
+          mkdir -p .build
           box build
     - persist_to_workspace:
         root: /tmp/project
@@ -117,19 +124,12 @@ jobs:
 
 workflows:
   version: 2
-  build-n-deploy:
+  test:
     jobs:
     - build-dev:
         filters:
           tags:
             ignore: /.*/
-
-    - build-no-dev:
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /[0-9]+(\.[0-9]+)*/
 
     - security-check:
         requires:
@@ -143,12 +143,19 @@ workflows:
         requires:
         - build-dev
 
+  build-n-deploy:
+    jobs:
+    - build-no-dev:
+        filters:
+          tags:
+            only: /[0-9]+(\.[0-9]+)*/
+          branches:
+            ignore: /.*/
+
     - build-phar:
         requires:
         - build-no-dev
         filters:
-          branches:
-            ignore: /.*/
           tags:
             only: /[0-9]+(\.[0-9]+)*/
 
@@ -156,7 +163,5 @@ workflows:
         requires:
         - build-phar
         filters:
-          branches:
-            ignore: /.*/
           tags:
             only: /[0-9]+(\.[0-9]+)*/
