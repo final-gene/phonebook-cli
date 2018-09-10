@@ -109,6 +109,7 @@ jobs:
     - image: circleci/golang:1.9.6
     working_directory: /tmp/project
     steps:
+    - checkout
     - run:
         name: Download github-release
         command: go get github.com/aktau/github-release
