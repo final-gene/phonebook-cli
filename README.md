@@ -1,44 +1,37 @@
-# PhoneBook CLI project
+# PhoneBook CLI
 
-[![CircleCI](https://circleci.com/gh/final-gene/phonebook-cli.svg?style=svg)](https://circleci.com/gh/final-gene/phonebook-cli)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/df076931cab0487e9598d1c0ee85d5cc)](https://www.codacy.com/app/final-gene/phonebook-cli?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=final-gene/phonebook-cli&amp;utm_campaign=Badge_Grade)
+[![CircleCI](https://circleci.com/gh/final-gene/phonebook-cli.svg?style=svg)](https://circleci.com/gh/final-gene/phonebook-cli) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/df076931cab0487e9598d1c0ee85d5cc)](https://www.codacy.com/app/final-gene/phonebook-cli?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=final-gene/phonebook-cli&amp;utm_campaign=Badge_Grade)
 
-## Set Up Host
+This is a image to run the [phonebook cli](https://github.com/final-gene/phonebook-cli).
 
-1. This project uses Docker
-    * macOS: [Download Docker for Mac](https://www.docker.com/docker-mac)
-    * Windows: [Download Docker for Windows](https://www.docker.com/docker-windows)
-2. Install Docker and [Docker Toolbox](https://www.docker.com/toolbox)
-3. Install [Composer](https://getcomposer.org)
+## Supported tags and respective Dockerfile links
+All [tagged releases](https://github.com/final-gene/phonebook-cli/releases) will be supported.
+* `latest` [(Dockerfile)](https://github.com/finalgene/phonebook-cli/blob/master/.docker/Dockerfile)
 
-## Set Up Working Copy
-
-### Clone this repository
+## How to use this image
+Run the `phonebook` image:
 
 ```bash
-git clone git@github.com:final-gene/php-phonebook-cli.git
+docker run \
+    --rm \
+    --interactive \
+    --volume "$(pwd)":/app \
+    finalgene/phonebook
 ```
 
-Or via HTTPS.
+## Quick reference
+* **Where to get help:**
+[the Docker Community Forums](https://forums.docker.com), [the Docker Community Slack](https://blog.docker.com/2016/11/introducing-docker-community-directory-docker-community-slack), or [Stack Overflow](https://stackoverflow.com/search?tab=newest&q=docker)
 
-```bash
-git clone https://github.com/final-gene/php-phonebook-cli.git
-```
+* **Where to file issues:**
+https://github.com/finalgene/phonebook-cli/issues
 
-### Install dependencies
+* **Contributing:**
+[Contribution guide](https://github.com/finalgene/phonebook-cli/blob/master/CONTRIBUTING.md)
 
-```bash
-composer install && composer run-script install-tools
-```
+* **Maintained by:**
+[The final gene Team](https://github.com/finalgene)
 
-#### XSD converter
+* **Source of this description:**
+[Repository README.md](https://github.com/finalgene/phonebook-cli/blob/master/README.md)
 
-This project supports XSD files which are used to generate PHP classes and JMS serializer definition.
-
-```bash
-composer run-script convert-xsd
-```
-
-## Behaviors
-
-The read commands will create [VCards in version 4.0](https://tools.ietf.org/html/rfc6350).

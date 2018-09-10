@@ -109,7 +109,6 @@ jobs:
     - image: circleci/golang:1.9.6
     working_directory: /tmp/project
     steps:
-    - checkout
     - run:
         name: Download github-release
         command: go get github.com/aktau/github-release
@@ -121,6 +120,17 @@ jobs:
     - run:
         name: Deploy phar
         command: github-release upload --user $CIRCLE_PROJECT_USERNAME --repo $CIRCLE_PROJECT_REPONAME --tag $CIRCLE_TAG --name phonebook.phar --file .build/phonebook.phar
+
+  deploy-docker:
+    docker:
+    - image: alpine:3.8
+    working_directory: /tmp/project
+    steps:
+    - run:
+        name: Trigger build
+        command: |
+          apk add curl
+          curl -H 'Content-Type: application/json' --data '{"build": true}' -X POST https://registry.hub.docker.com/u/finalgene/phonebook/trigger/${DOCKER_HUB_TOKEN}/
 
 workflows:
   version: 2
@@ -162,6 +172,13 @@ workflows:
     - deploy-phar:
         requires:
         - build-phar
+        filters:
+          tags:
+            only: /[0-9]+(\.[0-9]+)*/
+
+    - deploy-docker:
+        requires:
+        - deploy-phar
         filters:
           tags:
             only: /[0-9]+(\.[0-9]+)*/
