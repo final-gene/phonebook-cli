@@ -124,7 +124,7 @@ jobs:
 
   deploy-docker:
     docker:
-    - image: byrnedo/alpine-cur:latest
+    - image: byrnedo/alpine-curl:latest
     working_directory: /tmp/project
     steps:
     - run:
