@@ -106,13 +106,10 @@ jobs:
 
   deploy-phar:
     docker:
-    - image: circleci/golang:1.9.6
+    - image: finalgene/github-release:latest
     working_directory: /tmp/project
     steps:
     - checkout
-    - run:
-        name: Download github-release
-        command: go get github.com/aktau/github-release
     - attach_workspace:
         at: /tmp/project
     - run:
@@ -130,7 +127,6 @@ jobs:
     - run:
         name: Trigger build
         command: |
-          apk add curl
           curl -H "Content-Type: application/json" --data "{\"source_type\": \"Tag\", \"source_name\": \"${CIRCLE_TAG}\"}" -X POST https://registry.hub.docker.com/u/finalgene/phonebook/trigger/${DOCKER_HUB_TOKEN}/
           curl -H "Content-Type: application/json" --data "{\"source_type\": \"Branch\", \"source_name\": \"${CIRCLE_BRANCH}\"}" -X POST https://registry.hub.docker.com/u/finalgene/phonebook/trigger/${DOCKER_HUB_TOKEN}/
 
