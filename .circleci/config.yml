@@ -98,7 +98,7 @@ jobs:
         name: Build phar
         command: |
           mkdir -p .build
-          box build
+          box build -v
     - persist_to_workspace:
         root: /tmp/project
         paths:
