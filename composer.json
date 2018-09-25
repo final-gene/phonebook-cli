@@ -8,7 +8,7 @@
         "console"
     ],
     "homepage": "https://github.com/final-gene/php-phonebook-cli",
-    "license": "proprietary",
+    "license": "MIT",
     "authors": [
         {
             "name": "Frank Giesecke",
