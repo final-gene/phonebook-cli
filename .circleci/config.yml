@@ -132,7 +132,7 @@ jobs:
         command: |
           apk add curl
           curl -H "Content-Type: application/json" --data "{\"source_type\": \"Tag\", \"source_name\": \"${CIRCLE_TAG}\"}" -X POST https://registry.hub.docker.com/u/finalgene/phonebook/trigger/${DOCKER_HUB_TOKEN}/
-          curl -H "Content-Type: application/json" --data "{\"docker_tag\": \"latest\"}" -X POST https://registry.hub.docker.com/u/finalgene/phonebook/trigger/${DOCKER_HUB_TOKEN}/
+          curl -H "Content-Type: application/json" --data "{\"source_type\": \"Branch\", \"source_name\": \"${CIRCLE_BRANCH}\"}" -X POST https://registry.hub.docker.com/u/finalgene/phonebook/trigger/${DOCKER_HUB_TOKEN}/
 
 workflows:
   version: 2
