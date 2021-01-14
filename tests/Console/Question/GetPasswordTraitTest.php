@@ -24,40 +24,6 @@ class GetPasswordTraitTest extends TestCase
     use TestHelperTrait;
 
     /**
-     * Test get password from user should throw exception on non identical passwords
-     *
-     * @return void
-     * @expectedException \Symfony\Component\Console\Exception\InvalidArgumentException
-     */
-    public function testGetPasswordFromUserShouldThrowExceptionOnNonIdenticalPasswords(): void
-    {
-        $io = $this->createPartialMock(
-            SymfonyStyle::class,
-            [
-                'askHidden',
-            ]
-        );
-
-        $io->expects(static::exactly(2))
-            ->method('askHidden')
-            ->with(static::isType('string'))
-            ->willReturnOnConsecutiveCalls(
-                'password 1',
-                'password 2'
-            );
-
-        $trait = $this->getMockForTrait(GetPasswordTrait::class);
-
-        static::invokeMethod(
-            $trait,
-            'getPasswordFromUser',
-            [
-                $io,
-            ]
-        );
-    }
-
-    /**
      * Test get password from user should return password
      *
      * @return void

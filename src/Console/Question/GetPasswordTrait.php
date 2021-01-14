@@ -23,20 +23,9 @@ trait GetPasswordTrait
      * @param SymfonyStyle $io Console style
      *
      * @return string
-     *
-     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
     protected function getPasswordFromUser(SymfonyStyle $io): string
     {
-        $password = (string)$io->askHidden('Enter the password');
-        $passwordConfirmation = (string)$io->askHidden('Confirm the password');
-
-        if ('' === $password || $password !== $passwordConfirmation) {
-            throw new InvalidArgumentException(
-                'The password (confirmation) must not be empty and must be identical with the password!'
-            );
-        }
-
-        return $passwordConfirmation;
+        return (string)$io->askHidden('Enter the password');
     }
 }
