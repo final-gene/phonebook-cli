@@ -4,13 +4,13 @@ LABEL maintainer="frank.giesecke@final-gene.de"
 
 ARG VERSION
 
-# Install build dependencies
-# hadolint ignore=SC2086,DL3018
-RUN apk add --no-cache --virtual=.build-deps \
-        bash \
-        libxml2-dev
+RUN apk add --no-cache bash
 
 SHELL ["/bin/bash", "-o", "pipefail", "-e", "-c"]
+
+# Install build dependencies
+RUN apk add --no-cache --virtual=.build-deps \
+        libxml2-dev
 
 # Configure and install PHP extensions
 RUN docker-php-ext-install \
