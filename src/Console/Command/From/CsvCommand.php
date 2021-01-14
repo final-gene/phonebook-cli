@@ -194,7 +194,7 @@ class CsvCommand extends Command
         $vCard->add('FN', '');
 
         foreach ($row as $field => $value) {
-            if (preg_match('/[\s\d\+\(\)]/', $value)) {
+            if (preg_match('/^[\s\d\+\(\)]+$/', trim($value))) {
                 $vCard->add(
                     'TEL',
                     $this->normalizePhoneNumber($value),
