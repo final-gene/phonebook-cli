@@ -29,16 +29,20 @@ trait FileTrait
      */
     protected function getResourceForFile(SplFileInfo $file)
     {
-        if (!$file->isReadable()
-            || !is_resource($resource = fopen($file->getPathname(), 'rb'))
+        $pathname = $file->getPathname();
+        if ('php://stdin' !== $pathname
+        &&  !$file->isReadable()
         ) {
             throw new ReadFileException(
                 'Could not read from ' . $file->getPathname()
             );
         }
 
-        stream_set_timeout($resource, 10);
-        stream_set_blocking($resource, false);
+        if (!is_resource($resource = fopen($file->getPathname(), 'rb'))) {
+            throw new ReadFileException(
+                'Could not read from ' . $file->getPathname()
+            );
+        }
 
         return $resource;
     }
