@@ -190,11 +190,23 @@ class CsvCommand extends Command
      */
     protected function createVCardFromRow(array $row): VCard
     {
+        $company = '';
+
         $vCard = $this->createVCard();
         $vCard->add('FN', '');
+        $vCard->add('NOTE', '');
 
         foreach ($row as $field => $value) {
-            if (preg_match('/^[\s\d\+\(\)]+$/', trim($value))) {
+            $field = trim($field);
+            $value = trim($value);
+
+            if (empty($value)) {
+                continue;
+            }
+
+            if (5 < strlen($value)
+            &&  preg_match('/^[\s\d\+\(\)]+$/', $value)
+            ) {
                 $vCard->add(
                     'TEL',
                     $this->normalizePhoneNumber($value),
@@ -216,12 +228,57 @@ class CsvCommand extends Command
                 continue;
             }
 
+            if (false !== stripos($field, 'title')) {
+                $vCard->add(
+                    'TITLE',
+                    $value
+                );
+                continue;
+            }
+
+            if (false !== stripos($field, 'address')) {
+                $vCard->add(
+                    'ADR',
+                    $value,
+                    [
+                        'type' => $field,
+                    ]
+                );
+                continue;
+            }
+
+            if (false !== stripos($field, 'company')) {
+                $company = $value;
+                continue;
+            }
+
+            if (false !== stripos($field, 'name')) {
+                /** @var FlatText $fullName */
+                $fullName = $vCard->select('FN')[0];
+                $fullName->setValue(
+                    trim($fullName->getValue() . ' ' . $value)
+                );
+                continue;
+            }
+
+            if ($this->io->isDebug()) {
+                $this->io->note(sprintf("Field:\n%s\n\nContent:\n%s", $field, $value));
+            }
+
             /** @var FlatText $fullName */
-            $fullName = $vCard->select('FN')[0];
+            $fullName = $vCard->select('NOTE')[0];
             $fullName->setValue(
                 trim($fullName->getValue() . ' ' . $value)
             );
         }
+
+        $fullName = $vCard->select('FN')[0];
+        if (!empty($company)
+        &&  empty($fullName->getValue())
+        ) {
+            $fullName->setValue($company);
+        }
+
 
         return $vCard->convert(Document::VCARD40);
     }
