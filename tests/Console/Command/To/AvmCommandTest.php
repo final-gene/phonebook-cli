@@ -15,7 +15,7 @@ use FinalGene\PhoneBook\AVM\Phonebooks;
 use FinalGene\PhoneBook\Console\Helper\SerializerHelper;
 use FinalGene\PhoneBook\Exception\ReadFileException;
 use FinalGene\PhoneBook\Utils\TestHelperTrait;
-use JMS\Serializer\Serializer;
+use JMS\Serializer\SerializerInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Sabre\VObject\Component\VCard;
@@ -66,7 +66,7 @@ class AvmCommandTest extends TestCase
         $serializerHelper = $this->prophesize(SerializerHelper::class);
         $serializerHelper->getAvmSerializer()
             ->shouldBeCalled()
-            ->willReturn($this->createMock(Serializer::class));
+            ->willReturn($this->createMock(SerializerInterface::class));
 
         $command = $this->createPartialMock(
             AvmCommand::class,
@@ -128,7 +128,7 @@ class AvmCommandTest extends TestCase
             ->shouldBeCalled()
             ->willReturn($phoneBook->reveal());
 
-        $serializer = $this->prophesize(Serializer::class);
+        $serializer = $this->prophesize(SerializerInterface::class);
         $serializer->serialize(Argument::type(Phonebooks::class), 'xml')
             ->shouldBeCalled()
             ->willReturn('xml');

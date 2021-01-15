@@ -7,8 +7,8 @@
 
 namespace FinalGene\PhoneBook\Console\Helper;
 
-use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerBuilder;
+use JMS\Serializer\SerializerInterface;
 use Symfony\Component\Console\Helper\Helper;
 
 /**
@@ -31,10 +31,10 @@ class SerializerHelper extends Helper
     /**
      * Get avm serializer.
      *
-     * @return Serializer
+     * @return SerializerInterface
      * @throws \JMS\Serializer\Exception\InvalidArgumentException
      */
-    public function getAvmSerializer(): Serializer
+    public function getAvmSerializer(): SerializerInterface
     {
         return SerializerBuilder::create()
             ->addMetadataDir(
