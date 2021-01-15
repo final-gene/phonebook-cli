@@ -205,7 +205,7 @@ class CsvCommand extends Command
             }
 
             if (5 < strlen($value)
-            &&  preg_match('/^[\s\d\+\(\)]+$/', $value)
+                &&  preg_match('/^[\s\d\+\(\)]+$/', $value)
             ) {
                 $vCard->add(
                     'TEL',
@@ -274,7 +274,7 @@ class CsvCommand extends Command
 
         $fullName = $vCard->select('FN')[0];
         if (!empty($company)
-        &&  empty($fullName->getValue())
+            &&  empty($fullName->getValue())
         ) {
             $fullName->setValue($company);
         }

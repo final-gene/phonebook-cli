@@ -31,7 +31,7 @@ trait FileTrait
     {
         $pathname = $file->getPathname();
         if ('php://stdin' !== $pathname
-        &&  !$file->isReadable()
+            &&  !$file->isReadable()
         ) {
             throw new ReadFileException(
                 'Could not read from ' . $file->getPathname()
