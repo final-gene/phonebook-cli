@@ -50,7 +50,7 @@ jobs:
 
   security-check:
     docker:
-    - image: jsixc/sensiolabs-security-checker
+    - image: cwreden/sensiolabs-security-checker-docker
     working_directory: /tmp/project
     steps:
     - checkout
