@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad30f381d2cea7ab61387c0a80c02bf4",
+    "content-hash": "fcbad9bc9b992d1d17061f5bb87e09a3",
     "packages": [
         {
             "name": "barnabywalters/carddav",
