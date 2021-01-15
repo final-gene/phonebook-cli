@@ -9,6 +9,7 @@ namespace FinalGene\PhoneBook\Console\Command;
 
 use FinalGene\PhoneBook\Utils\TestHelperTrait;
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStreamWrapper;
 use PHPUnit\Framework\TestCase;
 use SplFileInfo;
@@ -50,7 +51,7 @@ class FileTraitTest extends TestCase
     {
         vfsStreamWrapper::unregister();
     }
-    
+
     /**
      * Test get resource for file.
      *
@@ -87,6 +88,32 @@ class FileTraitTest extends TestCase
             'getResourceForFile',
             [
                 new SplFileInfo('non-exiting.file'),
+            ]
+        );
+    }
+
+    /**
+     * Test get resource for file should throw exception if resource can not be open.
+     *
+     * @return void
+     * @expectedException \FinalGene\PhoneBook\Exception\ReadFileException
+     */
+    public function testGetResourceForFileShouldThrowExceptionIfResourceCanNotBeOpen(): void
+    {
+        $trait = $this->getMockForTrait(FileTrait::class);
+
+        $file = $this->prophesize(SplFileInfo::class);
+        $file->isReadable()
+            ->willReturn(true);
+
+        $file->getPathname()
+            ->willReturn('non-exiting.file');
+
+        static::invokeMethod(
+            $trait,
+            'getResourceForFile',
+            [
+                $file->reveal(),
             ]
         );
     }

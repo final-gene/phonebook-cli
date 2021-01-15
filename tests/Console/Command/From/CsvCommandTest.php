@@ -9,6 +9,7 @@ namespace FinalGene\PhoneBook\Console\Command\From;
 
 use ArrayIterator;
 use FinalGene\PhoneBook\Utils\TestHelperTrait;
+use Generator;
 use League\Csv\Exception;
 use League\Csv\Reader;
 use libphonenumber\NumberParseException;
@@ -516,9 +517,13 @@ CSV
     /**
      * Test create vcard from row.
      *
+     * @param array  $vCardData  vCard data
+     * @param string $expectedFN expected name
+     *
      * @return void
+     * @dataProvider provideDataForCreateVCardFromRow
      */
-    public function testCreateVCardFromRow(): void
+    public function testCreateVCardFromRow(array $vCardData, string $expectedFN): void
     {
         $command = $this->createPartialMock(
             CsvCommand::class,
@@ -549,20 +554,51 @@ CSV
             $command,
             'createVCardFromRow',
             [
-                [
-                    'firstname' => 'John',
-                    'name' => 'Doe',
-                    'phone' => '0123456789',
-                    'fax' => '0987654321',
-                    'email' => 'john.doe@example.com',
-                ],
+                $vCardData,
             ]
         );
 
         static::assertInstanceOf(VCard::class, $vCard);
-        static::assertEquals('John Doe', $vCard->__get('FN')->getValue());
+        static::assertEquals($expectedFN, $vCard->__get('FN')->getValue());
         static::assertEquals('01234', $vCard->getByType('TEL', 'home')->getValue());
         static::assertEquals('01234', $vCard->getByType('TEL', 'fax')->getValue());
         static::assertEquals('john.doe@example.com', $vCard->getByType('EMAIL', 'work')->getValue());
+    }
+
+    /**
+     * Provide data for create vcard from row
+     *
+     * @return Generator
+     */
+    public function provideDataForCreateVCardFromRow(): Generator
+    {
+        yield [
+            'vCardData' => [
+                'title' => 'Dr.',
+                'firstname' => 'John',
+                'name' => 'Doe',
+                'phone' => '0123456789',
+                'fax' => '0987654321',
+                'email' => 'john.doe@example.com',
+                'address' => 'john doe street',
+                'company' => 'john doe\'s',
+                'text' => 'some text',
+            ],
+            'expectedFN' => 'John Doe',
+        ];
+
+        yield [
+            'vCardData' => [
+                'title' => 'Dr.',
+                'firstname' => '',
+                'phone' => '0123456789',
+                'fax' => '0987654321',
+                'email' => 'john.doe@example.com',
+                'address' => 'john doe street',
+                'company' => 'john doe\'s',
+                'text' => 'some text',
+            ],
+            'expectedFN' => 'john doe\'s',
+        ];
     }
 }

@@ -261,10 +261,6 @@ class CsvCommand extends Command
                 continue;
             }
 
-            if ($this->io->isDebug()) {
-                $this->io->note(sprintf("Field:\n%s\n\nContent:\n%s", $field, $value));
-            }
-
             /** @var FlatText $fullName */
             $fullName = $vCard->select('NOTE')[0];
             $fullName->setValue(

@@ -7,6 +7,7 @@
 
 namespace FinalGene\PhoneBook\Console\Command;
 
+use Exception;
 use FinalGene\PhoneBook\Exception\EmptyFileException;
 use FinalGene\PhoneBook\Exception\ReadFileException;
 use SplFileInfo;
@@ -34,13 +35,18 @@ trait FileTrait
             &&  !$file->isReadable()
         ) {
             throw new ReadFileException(
-                'Could not read from ' . $file->getPathname()
+                'Could not read from ' . $pathname
             );
         }
 
-        if (!is_resource($resource = fopen($file->getPathname(), 'rb'))) {
+        try {
+            $resource = fopen($pathname, 'rb');
+        } catch (Exception $e) {
+            $resource = null;
+        }
+        if (!is_resource($resource)) {
             throw new ReadFileException(
-                'Could not read from ' . $file->getPathname()
+                'Could not read from ' . $pathname
             );
         }
 
