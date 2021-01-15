@@ -9,14 +9,14 @@ class Category
 {
 
     /**
-     * @property integer $__value
+     * @var int $__value
      */
     private $__value = null;
 
     /**
      * Construct
      *
-     * @param integer $value
+     * @param int $value
      */
     public function __construct($value)
     {
@@ -26,16 +26,14 @@ class Category
     /**
      * Gets or sets the inner value
      *
-     * @param integer $value
-     *
-     * @return integer
+     * @param int $value
+     * @return int
      */
     public function value()
     {
         if ($args = func_get_args()) {
             $this->__value = $args[0];
         }
-
         return $this->__value;
     }
 

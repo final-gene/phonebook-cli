@@ -1,11 +1,13 @@
 FinalGene\PhoneBook\AVM\Category:
-  xml_root_name: category
-  properties:
-    __value:
-      expose: true
-      xml_value: true
-      access_type: public_method
-      accessor:
-        getter: value
-        setter: value
-      type: integer
+    xml_root_name: category
+    properties:
+        __value:
+            expose: true
+            xml_value: true
+            access_type: public_method
+            accessor:
+                getter: value
+                setter: value
+            type: int
+            xml_element:
+                cdata: false

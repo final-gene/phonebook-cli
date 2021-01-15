@@ -1,11 +1,13 @@
 FinalGene\PhoneBook\AVM\Phonebooks:
-  xml_root_name: phonebooks
-  properties:
-    phonebook:
-      expose: true
-      access_type: public_method
-      serialized_name: phonebook
-      accessor:
-        getter: getPhonebook
-        setter: setPhonebook
-      type: FinalGene\PhoneBook\AVM\Phonebook
+    xml_root_name: phonebooks
+    properties:
+        phonebook:
+            expose: true
+            access_type: public_method
+            serialized_name: phonebook
+            xml_element:
+                cdata: false
+            accessor:
+                getter: getPhonebook
+                setter: setPhonebook
+            type: FinalGene\PhoneBook\AVM\Phonebook

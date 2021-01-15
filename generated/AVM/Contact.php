@@ -13,31 +13,31 @@ class Contact
      *  wichtig (oder gar nicht vorhanden) 1...ist wichtig und es klingelt auch
      *  bei Anrufsperre
      *
-     * @property integer $category
+     * @var int $category
      */
     private $category = null;
 
     /**
-     * @property \FinalGene\PhoneBook\AVM\Person $person
+     * @var \FinalGene\PhoneBook\AVM\Person $person
      */
     private $person = null;
 
     /**
-     * @property \FinalGene\PhoneBook\AVM\Number[] $telephony
+     * @var \FinalGene\PhoneBook\AVM\Number[] $telephony
      */
     private $telephony = null;
 
     /**
      * Sinn unbekannt
      *
-     * @property \FinalGene\PhoneBook\AVM\Services $services
+     * @var \FinalGene\PhoneBook\AVM\Services $services
      */
     private $services = null;
 
     /**
      * Sinn unbekannt.
      *
-     * @property \FinalGene\PhoneBook\AVM\Setup $setup
+     * @var \FinalGene\PhoneBook\AVM\Setup $setup
      */
     private $setup = null;
 
@@ -48,7 +48,7 @@ class Contact
      *  wichtig (oder gar nicht vorhanden) 1...ist wichtig und es klingelt auch
      *  bei Anrufsperre
      *
-     * @return integer
+     * @return int
      */
     public function getCategory()
     {
@@ -62,14 +62,12 @@ class Contact
      *  wichtig (oder gar nicht vorhanden) 1...ist wichtig und es klingelt auch
      *  bei Anrufsperre
      *
-     * @param integer $category
-     *
+     * @param int $category
      * @return self
      */
     public function setCategory($category)
     {
         $this->category = $category;
-
         return $this;
     }
 
@@ -87,13 +85,11 @@ class Contact
      * Sets a new person
      *
      * @param \FinalGene\PhoneBook\AVM\Person $person
-     *
      * @return self
      */
     public function setPerson(\FinalGene\PhoneBook\AVM\Person $person)
     {
         $this->person = $person;
-
         return $this;
     }
 
@@ -101,22 +97,19 @@ class Contact
      * Adds as number
      *
      * @return self
-     *
      * @param \FinalGene\PhoneBook\AVM\Number $number
      */
     public function addToTelephony(\FinalGene\PhoneBook\AVM\Number $number)
     {
         $this->telephony[] = $number;
-
         return $this;
     }
 
     /**
      * isset telephony
      *
-     * @param scalar $index
-     *
-     * @return boolean
+     * @param int|string $index
+     * @return bool
      */
     public function issetTelephony($index)
     {
@@ -126,8 +119,7 @@ class Contact
     /**
      * unset telephony
      *
-     * @param scalar $index
-     *
+     * @param int|string $index
      * @return void
      */
     public function unsetTelephony($index)
@@ -149,13 +141,11 @@ class Contact
      * Sets a new telephony
      *
      * @param \FinalGene\PhoneBook\AVM\Number[] $telephony
-     *
      * @return self
      */
     public function setTelephony(array $telephony)
     {
         $this->telephony = $telephony;
-
         return $this;
     }
 
@@ -177,13 +167,11 @@ class Contact
      * Sinn unbekannt
      *
      * @param \FinalGene\PhoneBook\AVM\Services $services
-     *
      * @return self
      */
     public function setServices(\FinalGene\PhoneBook\AVM\Services $services)
     {
         $this->services = $services;
-
         return $this;
     }
 
@@ -205,13 +193,11 @@ class Contact
      * Sinn unbekannt.
      *
      * @param \FinalGene\PhoneBook\AVM\Setup $setup
-     *
      * @return self
      */
     public function setSetup(\FinalGene\PhoneBook\AVM\Setup $setup)
     {
         $this->setup = $setup;
-
         return $this;
     }
 

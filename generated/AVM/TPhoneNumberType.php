@@ -12,27 +12,27 @@ class TPhoneNumberType
 {
 
     /**
-     * @property string $__value
+     * @var string $__value
      */
     private $__value = null;
 
     /**
-     * @property integer $prio
+     * @var int $prio
      */
     private $prio = null;
 
     /**
-     * @property string $type
+     * @var string $type
      */
     private $type = null;
 
     /**
-     * @property integer $quickdial
+     * @var int $quickdial
      */
     private $quickdial = null;
 
     /**
-     * @property string $vanity
+     * @var string $vanity
      */
     private $vanity = null;
 
@@ -50,7 +50,6 @@ class TPhoneNumberType
      * Gets or sets the inner value
      *
      * @param string $value
-     *
      * @return string
      */
     public function value()
@@ -58,7 +57,6 @@ class TPhoneNumberType
         if ($args = func_get_args()) {
             $this->__value = $args[0];
         }
-
         return $this->__value;
     }
 
@@ -75,7 +73,7 @@ class TPhoneNumberType
     /**
      * Gets as prio
      *
-     * @return integer
+     * @return int
      */
     public function getPrio()
     {
@@ -85,14 +83,12 @@ class TPhoneNumberType
     /**
      * Sets a new prio
      *
-     * @param integer $prio
-     *
+     * @param int $prio
      * @return self
      */
     public function setPrio($prio)
     {
         $this->prio = $prio;
-
         return $this;
     }
 
@@ -110,20 +106,18 @@ class TPhoneNumberType
      * Sets a new type
      *
      * @param string $type
-     *
      * @return self
      */
     public function setType($type)
     {
         $this->type = $type;
-
         return $this;
     }
 
     /**
      * Gets as quickdial
      *
-     * @return integer
+     * @return int
      */
     public function getQuickdial()
     {
@@ -133,14 +127,12 @@ class TPhoneNumberType
     /**
      * Sets a new quickdial
      *
-     * @param integer $quickdial
-     *
+     * @param int $quickdial
      * @return self
      */
     public function setQuickdial($quickdial)
     {
         $this->quickdial = $quickdial;
-
         return $this;
     }
 
@@ -158,13 +150,11 @@ class TPhoneNumberType
      * Sets a new vanity
      *
      * @param string $vanity
-     *
      * @return self
      */
     public function setVanity($vanity)
     {
         $this->vanity = $vanity;
-
         return $this;
     }
 

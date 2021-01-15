@@ -1,19 +1,23 @@
 FinalGene\PhoneBook\AVM\Person:
-  xml_root_name: person
-  properties:
-    realName:
-      expose: true
-      access_type: public_method
-      serialized_name: realName
-      accessor:
-        getter: getRealName
-        setter: setRealName
-      type: string
-    imageUrl:
-      expose: true
-      access_type: public_method
-      serialized_name: ImageUrl
-      accessor:
-        getter: getImageUrl
-        setter: setImageUrl
-      type: string
+    xml_root_name: person
+    properties:
+        realName:
+            expose: true
+            access_type: public_method
+            serialized_name: realName
+            xml_element:
+                cdata: false
+            accessor:
+                getter: getRealName
+                setter: setRealName
+            type: string
+        imageUrl:
+            expose: true
+            access_type: public_method
+            serialized_name: ImageUrl
+            xml_element:
+                cdata: false
+            accessor:
+                getter: getImageUrl
+                setter: setImageUrl
+            type: string

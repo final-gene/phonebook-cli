@@ -11,20 +11,20 @@ class Phonebook
     /**
      * Gibt den Namen des Telefonbuchs an.
      *
-     * @property string $name
+     * @var string $name
      */
     private $name = null;
 
     /**
-     * @property integer $owner
+     * @var int $owner
      */
     private $owner = null;
 
     /**
-     * @property \FinalGene\PhoneBook\AVM\Contact[] $contact
+     * @var \FinalGene\PhoneBook\AVM\Contact[] $contact
      */
     private $contact = [
-
+        
     ];
 
     /**
@@ -45,20 +45,18 @@ class Phonebook
      * Gibt den Namen des Telefonbuchs an.
      *
      * @param string $name
-     *
      * @return self
      */
     public function setName($name)
     {
         $this->name = $name;
-
         return $this;
     }
 
     /**
      * Gets as owner
      *
-     * @return integer
+     * @return int
      */
     public function getOwner()
     {
@@ -68,14 +66,12 @@ class Phonebook
     /**
      * Sets a new owner
      *
-     * @param integer $owner
-     *
+     * @param int $owner
      * @return self
      */
     public function setOwner($owner)
     {
         $this->owner = $owner;
-
         return $this;
     }
 
@@ -83,22 +79,19 @@ class Phonebook
      * Adds as contact
      *
      * @return self
-     *
      * @param \FinalGene\PhoneBook\AVM\Contact $contact
      */
     public function addToContact(\FinalGene\PhoneBook\AVM\Contact $contact)
     {
         $this->contact[] = $contact;
-
         return $this;
     }
 
     /**
      * isset contact
      *
-     * @param scalar $index
-     *
-     * @return boolean
+     * @param int|string $index
+     * @return bool
      */
     public function issetContact($index)
     {
@@ -108,8 +101,7 @@ class Phonebook
     /**
      * unset contact
      *
-     * @param scalar $index
-     *
+     * @param int|string $index
      * @return void
      */
     public function unsetContact($index)
@@ -131,13 +123,11 @@ class Phonebook
      * Sets a new contact
      *
      * @param \FinalGene\PhoneBook\AVM\Contact[] $contact
-     *
      * @return self
      */
     public function setContact(array $contact)
     {
         $this->contact = $contact;
-
         return $this;
     }
 

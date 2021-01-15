@@ -9,7 +9,7 @@ class RealName
 {
 
     /**
-     * @property string $__value
+     * @var string $__value
      */
     private $__value = null;
 
@@ -27,7 +27,6 @@ class RealName
      * Gets or sets the inner value
      *
      * @param string $value
-     *
      * @return string
      */
     public function value()
@@ -35,7 +34,6 @@ class RealName
         if ($args = func_get_args()) {
             $this->__value = $args[0];
         }
-
         return $this->__value;
     }
 

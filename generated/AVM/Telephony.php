@@ -9,32 +9,29 @@ class Telephony
 {
 
     /**
-     * @property \FinalGene\PhoneBook\AVM\Number[] $number
+     * @var \FinalGene\PhoneBook\AVM\Number[] $number
      */
     private $number = [
-
+        
     ];
 
     /**
      * Adds as number
      *
      * @return self
-     *
      * @param \FinalGene\PhoneBook\AVM\Number $number
      */
     public function addToNumber(\FinalGene\PhoneBook\AVM\Number $number)
     {
         $this->number[] = $number;
-
         return $this;
     }
 
     /**
      * isset number
      *
-     * @param scalar $index
-     *
-     * @return boolean
+     * @param int|string $index
+     * @return bool
      */
     public function issetNumber($index)
     {
@@ -44,8 +41,7 @@ class Telephony
     /**
      * unset number
      *
-     * @param scalar $index
-     *
+     * @param int|string $index
      * @return void
      */
     public function unsetNumber($index)
@@ -67,13 +63,11 @@ class Telephony
      * Sets a new number
      *
      * @param \FinalGene\PhoneBook\AVM\Number[] $number
-     *
      * @return self
      */
     public function setNumber(array $number)
     {
         $this->number = $number;
-
         return $this;
     }
 

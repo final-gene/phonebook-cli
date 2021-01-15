@@ -9,7 +9,7 @@ class Person
 {
 
     /**
-     * @property string $realName
+     * @var string $realName
      */
     private $realName = null;
 
@@ -21,7 +21,7 @@ class Person
      *  Bilder anzeigen, so ist es zumindest auf den Prospekten
      *  dargestellt
      *
-     * @property string $imageUrl
+     * @var string $imageUrl
      */
     private $imageUrl = null;
 
@@ -39,13 +39,11 @@ class Person
      * Sets a new realName
      *
      * @param string $realName
-     *
      * @return self
      */
     public function setRealName($realName)
     {
         $this->realName = $realName;
-
         return $this;
     }
 
@@ -77,13 +75,11 @@ class Person
      *  dargestellt
      *
      * @param string $imageUrl
-     *
      * @return self
      */
     public function setImageUrl($imageUrl)
     {
         $this->imageUrl = $imageUrl;
-
         return $this;
     }
 

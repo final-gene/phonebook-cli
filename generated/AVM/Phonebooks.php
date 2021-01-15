@@ -11,7 +11,7 @@ class Phonebooks
     /**
      * Mehr als 1 phonebook werden ignoriert.
      *
-     * @property \FinalGene\PhoneBook\AVM\Phonebook $phonebook
+     * @var \FinalGene\PhoneBook\AVM\Phonebook $phonebook
      */
     private $phonebook = null;
 
@@ -33,13 +33,11 @@ class Phonebooks
      * Mehr als 1 phonebook werden ignoriert.
      *
      * @param \FinalGene\PhoneBook\AVM\Phonebook $phonebook
-     *
      * @return self
      */
     public function setPhonebook(\FinalGene\PhoneBook\AVM\Phonebook $phonebook)
     {
         $this->phonebook = $phonebook;
-
         return $this;
     }
 

@@ -1,46 +1,48 @@
 FinalGene\PhoneBook\AVM\TPhoneNumberType:
-  properties:
-    __value:
-      expose: true
-      xml_value: true
-      access_type: public_method
-      accessor:
-        getter: value
-        setter: value
-      type: string
-    prio:
-      expose: true
-      access_type: public_method
-      serialized_name: prio
-      accessor:
-        getter: getPrio
-        setter: setPrio
-      xml_attribute: true
-      type: integer
-    type:
-      expose: true
-      access_type: public_method
-      serialized_name: type
-      accessor:
-        getter: getType
-        setter: setType
-      xml_attribute: true
-      type: string
-    quickdial:
-      expose: true
-      access_type: public_method
-      serialized_name: quickdial
-      accessor:
-        getter: getQuickdial
-        setter: setQuickdial
-      xml_attribute: true
-      type: integer
-    vanity:
-      expose: true
-      access_type: public_method
-      serialized_name: vanity
-      accessor:
-        getter: getVanity
-        setter: setVanity
-      xml_attribute: true
-      type: string
+    properties:
+        __value:
+            expose: true
+            xml_value: true
+            access_type: public_method
+            accessor:
+                getter: value
+                setter: value
+            type: string
+            xml_element:
+                cdata: false
+        prio:
+            expose: true
+            access_type: public_method
+            serialized_name: prio
+            accessor:
+                getter: getPrio
+                setter: setPrio
+            xml_attribute: true
+            type: int
+        type:
+            expose: true
+            access_type: public_method
+            serialized_name: type
+            accessor:
+                getter: getType
+                setter: setType
+            xml_attribute: true
+            type: string
+        quickdial:
+            expose: true
+            access_type: public_method
+            serialized_name: quickdial
+            accessor:
+                getter: getQuickdial
+                setter: setQuickdial
+            xml_attribute: true
+            type: int
+        vanity:
+            expose: true
+            access_type: public_method
+            serialized_name: vanity
+            accessor:
+                getter: getVanity
+                setter: setVanity
+            xml_attribute: true
+            type: string

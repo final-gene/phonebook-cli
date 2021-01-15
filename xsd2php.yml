@@ -7,3 +7,5 @@ xsd2php:
     'FinalGene\PhoneBook\AVM': config/jms
   naming_strategy: long
   path_generator: psr4
+  configs_jms:
+    xml_cdata: false
